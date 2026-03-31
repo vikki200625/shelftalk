@@ -5,13 +5,15 @@ import Home from './pages/Home'
 import SearchResults from './pages/SearchResults'
 import BookDetails from './pages/BookDetails'
 import MyLibrary from './pages/MyLibrary'
+import BookLists from './pages/BookLists'
+import BookListDetail from './pages/BookListDetail'
 import Profile from './pages/Profile'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-950 transition-colors">
       <Navbar />
       <main className="flex-1">
         <Routes>
@@ -19,6 +21,8 @@ function App() {
           <Route path="/search" element={<SearchResults />} />
           <Route path="/book/:id" element={<BookDetails />} />
           <Route path="/library" element={<MyLibrary />} />
+          <Route path="/lists" element={<BookLists />} />
+          <Route path="/lists/:id" element={<BookListDetail />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

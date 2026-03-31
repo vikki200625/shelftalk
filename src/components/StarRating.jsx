@@ -29,7 +29,7 @@ export default function StarRating({ value = 0, onChange, readOnly = false, size
             className={`${readOnly ? 'cursor-default' : 'cursor-pointer'} transition`}
           >
             <svg
-              className={`${starClass} ${filled ? 'text-amber-400' : 'text-gray-300'}`}
+              className={`${starClass} ${filled ? 'text-amber-400' : 'text-gray-300 dark:text-gray-600'}`}
               fill="currentColor"
               viewBox="0 0 20 20"
             >

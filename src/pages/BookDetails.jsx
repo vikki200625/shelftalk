@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getBookDetails } from '../lib/bookService'
+import { addToRecentlyViewed } from '../lib/recentlyViewed'
 import { useAuth } from '../contexts/AuthContext'
 import supabase from '../lib/supabase'
 import StarRating from '../components/StarRating'
@@ -50,7 +51,10 @@ export default function BookDetails() {
     setActiveDiscussion(null)
 
     getBookDetails(id)
-      .then(setBook)
+      .then((data) => {
+        setBook(data)
+        addToRecentlyViewed(data)
+      })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [id])
@@ -277,12 +281,12 @@ export default function BookDetails() {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="animate-pulse flex gap-8">
-          <div className="w-48 h-72 bg-gray-200 rounded-lg flex-shrink-0"></div>
+          <div className="w-48 h-72 bg-gray-200 dark:bg-gray-700 rounded-lg flex-shrink-0"></div>
           <div className="flex-1">
-            <div className="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/3 mb-6"></div>
-            <div className="h-20 bg-gray-200 rounded w-full"></div>
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-6"></div>
+            <div className="h-20 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
           </div>
         </div>
       </div>
@@ -292,7 +296,7 @@ export default function BookDetails() {
   if (error) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="bg-red-50 text-red-700 p-4 rounded-lg">{error}</div>
+        <div className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 p-4 rounded-lg">{error}</div>
       </div>
     )
   }
@@ -311,8 +315,8 @@ export default function BookDetails() {
           {book.coverUrl ? (
             <img src={book.coverUrl} alt={book.title} className="w-full rounded-lg shadow-md" />
           ) : (
-            <div className="w-full aspect-[2/3] bg-gray-100 rounded-lg flex items-center justify-center">
-              <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-full aspect-[2/3] bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+              <svg className="w-12 h-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
@@ -320,38 +324,38 @@ export default function BookDetails() {
         </div>
 
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">{book.title}</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{book.title}</h1>
           {book.subtitle && (
-            <p className="text-gray-500 mb-2">{book.subtitle}</p>
+            <p className="text-gray-500 dark:text-gray-400 mb-2">{book.subtitle}</p>
           )}
-          <p className="text-gray-600 mb-1">by {authorsText}</p>
+          <p className="text-gray-600 dark:text-gray-300 mb-1">by {authorsText}</p>
 
           {book.averageRating && (
             <div className="flex items-center gap-2 mb-2">
               <StarRating value={Math.round(book.averageRating)} readOnly size="sm" />
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-gray-500 dark:text-gray-400">
                 {book.averageRating.toFixed(1)} ({book.ratingsCount} ratings)
               </span>
             </div>
           )}
 
           {book.publishYear && (
-            <p className="text-gray-500 text-sm mb-1">Published: {book.publishYear}</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">Published: {book.publishYear}</p>
           )}
           {book.publisher && (
-            <p className="text-gray-500 text-sm mb-1">Publisher: {book.publisher}</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">Publisher: {book.publisher}</p>
           )}
           {book.pageCount && (
-            <p className="text-gray-500 text-sm mb-1">{book.pageCount} pages</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">{book.pageCount} pages</p>
           )}
           {(book.isbn13 || book.isbn10 || book.isbn) && (
-            <p className="text-gray-500 text-sm mb-1">ISBN: {book.isbn13 || book.isbn10 || book.isbn}</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">ISBN: {book.isbn13 || book.isbn10 || book.isbn}</p>
           )}
 
           {tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-3 mb-4">
               {tags.slice(0, 5).map((s, i) => (
-                <span key={i} className="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded">
+                <span key={i} className="text-xs bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded">
                   {s}
                 </span>
               ))}
@@ -367,7 +371,7 @@ export default function BookDetails() {
                     value={libraryStatus}
                     onChange={(e) => handleAddToLibrary(e.target.value)}
                     disabled={saving}
-                    className="px-3 py-2 rounded-lg border border-gray-300 bg-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    className="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
                   >
                     {STATUS_OPTIONS.map((opt) => (
                       <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -376,7 +380,7 @@ export default function BookDetails() {
                   <button
                     onClick={handleRemoveFromLibrary}
                     disabled={saving}
-                    className="text-sm text-red-600 hover:text-red-700 transition"
+                    className="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition"
                   >
                     Remove
                   </button>
@@ -394,8 +398,8 @@ export default function BookDetails() {
           )}
 
           {!user && (
-            <p className="mt-4 text-sm text-gray-500">
-              <Link to="/login" className="text-indigo-600 hover:underline">Login</Link> to add this book to your library.
+            <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+              <Link to="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline">Login</Link> to add this book to your library.
             </p>
           )}
 
@@ -417,9 +421,9 @@ export default function BookDetails() {
       {/* Description */}
       {book.description && (
         <div className="mb-10">
-          <h2 className="text-lg font-semibold text-gray-900 mb-3">Description</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Description</h2>
           <div
-            className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
+            className="text-gray-700 dark:text-gray-300 leading-relaxed prose prose-sm dark:prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: book.description }}
           />
         </div>
@@ -427,29 +431,29 @@ export default function BookDetails() {
 
       {/* Reviews Section */}
       <div className="mb-10">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Reviews</h2>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Reviews</h2>
 
         {/* Write/Edit Review */}
         {user && (
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-6">
             {userReview && !editingReview ? (
               <div>
-                <p className="text-sm text-gray-500 mb-2">Your review:</p>
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Your review:</p>
                 <div className="flex items-center gap-2 mb-2">
                   <StarRating value={userReview.rating} readOnly />
-                  <span className="text-sm text-gray-500">{userReview.rating}/5</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">{userReview.rating}/5</span>
                 </div>
-                {userReview.body && <p className="text-gray-700 mb-3">{userReview.body}</p>}
+                {userReview.body && <p className="text-gray-700 dark:text-gray-300 mb-3">{userReview.body}</p>}
                 <div className="flex gap-2">
                   <button
                     onClick={() => setEditingReview(true)}
-                    className="text-sm text-indigo-600 hover:underline"
+                    className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
                   >
                     Edit
                   </button>
                   <button
                     onClick={handleDeleteReview}
-                    className="text-sm text-red-600 hover:underline"
+                    className="text-sm text-red-600 dark:text-red-400 hover:underline"
                   >
                     Delete
                   </button>
@@ -457,7 +461,7 @@ export default function BookDetails() {
               </div>
             ) : (
               <form onSubmit={handleSubmitReview}>
-                <p className="text-sm text-gray-500 mb-2">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
                   {editingReview ? 'Edit your review:' : 'Write a review:'}
                 </p>
                 <div className="mb-3">
@@ -468,7 +472,7 @@ export default function BookDetails() {
                   onChange={(e) => setReviewBody(e.target.value)}
                   placeholder="Share your thoughts about this book..."
                   rows={3}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-sm"
+                  className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
                 />
                 <div className="flex gap-2 mt-3">
                   <button
@@ -486,7 +490,7 @@ export default function BookDetails() {
                         setReviewRating(userReview.rating)
                         setReviewBody(userReview.body || '')
                       }}
-                      className="text-sm text-gray-500 hover:text-gray-700"
+                      className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
                     >
                       Cancel
                     </button>
@@ -499,21 +503,21 @@ export default function BookDetails() {
 
         {/* All Reviews */}
         {reviews.filter(r => !user || r.user_id !== user.id).length === 0 && !userReview ? (
-          <p className="text-gray-500 text-sm">No reviews yet. Be the first to review this book!</p>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">No reviews yet. Be the first to review this book!</p>
         ) : (
           <div className="space-y-4">
             {reviews
               .filter(r => !user || r.user_id !== user.id)
               .map((review) => (
-                <div key={review.id} className="border-b border-gray-100 pb-4">
+                <div key={review.id} className="border-b border-gray-100 dark:border-gray-700 pb-4">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-sm text-gray-900">
+                    <span className="font-medium text-sm text-gray-900 dark:text-white">
                       {review.profiles?.display_name || 'Anonymous'}
                     </span>
                     <StarRating value={review.rating} readOnly size="sm" />
                   </div>
-                  {review.body && <p className="text-gray-700 text-sm mt-1">{review.body}</p>}
-                  <p className="text-xs text-gray-400 mt-1">
+                  {review.body && <p className="text-gray-700 dark:text-gray-300 text-sm mt-1">{review.body}</p>}
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                     {new Date(review.created_at).toLocaleDateString()}
                   </p>
                 </div>
@@ -525,11 +529,11 @@ export default function BookDetails() {
       {/* Discussions Section */}
       <div className="mb-10">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900">Discussions</h2>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Discussions</h2>
           {user && !activeDiscussion && (
             <button
               onClick={() => setShowNewDiscussion(!showNewDiscussion)}
-              className="text-sm text-indigo-600 hover:underline"
+              className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
             >
               {showNewDiscussion ? 'Cancel' : '+ New Discussion'}
             </button>
@@ -538,20 +542,20 @@ export default function BookDetails() {
 
         {/* New Discussion Form */}
         {showNewDiscussion && user && (
-          <form onSubmit={handleCreateDiscussion} className="bg-gray-50 rounded-lg p-4 mb-6">
+          <form onSubmit={handleCreateDiscussion} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-6">
             <input
               type="text"
               value={newDiscussionTitle}
               onChange={(e) => setNewDiscussionTitle(e.target.value)}
               placeholder="Discussion title..."
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 outline-none text-sm mb-3"
+              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
             />
             <textarea
               value={newDiscussionBody}
               onChange={(e) => setNewDiscussionBody(e.target.value)}
               placeholder="What's on your mind? (optional)"
               rows={3}
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-sm mb-3"
+              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
             />
             <button
               type="submit"
@@ -568,7 +572,7 @@ export default function BookDetails() {
           <div>
             <button
               onClick={() => { setActiveDiscussion(null); setReplies([]) }}
-              className="text-sm text-indigo-600 hover:underline mb-4 inline-flex items-center gap-1"
+              className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline mb-4 inline-flex items-center gap-1"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -576,22 +580,22 @@ export default function BookDetails() {
               Back to discussions
             </button>
 
-            <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4">
+            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-gray-900">{activeDiscussion.title}</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-white">{activeDiscussion.title}</h3>
                 {user && user.id === activeDiscussion.user_id && (
                   <button
                     onClick={() => handleDeleteDiscussion(activeDiscussion.id)}
-                    className="text-xs text-red-600 hover:underline"
+                    className="text-xs text-red-600 dark:text-red-400 hover:underline"
                   >
                     Delete
                   </button>
                 )}
               </div>
               {activeDiscussion.body && (
-                <p className="text-gray-700 text-sm mt-2">{activeDiscussion.body}</p>
+                <p className="text-gray-700 dark:text-gray-300 text-sm mt-2">{activeDiscussion.body}</p>
               )}
-              <div className="flex items-center gap-2 mt-2 text-xs text-gray-400">
+              <div className="flex items-center gap-2 mt-2 text-xs text-gray-400 dark:text-gray-500">
                 <span>{activeDiscussion.profiles?.display_name || 'Anonymous'}</span>
                 <span>&middot;</span>
                 <span>{new Date(activeDiscussion.created_at).toLocaleDateString()}</span>
@@ -601,22 +605,22 @@ export default function BookDetails() {
             {/* Replies */}
             <div className="space-y-3 ml-4 mb-4">
               {replies.map((reply) => (
-                <div key={reply.id} className="bg-gray-50 rounded-lg p-3">
+                <div key={reply.id} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-sm text-gray-900">
+                    <span className="font-medium text-sm text-gray-900 dark:text-white">
                       {reply.profiles?.display_name || 'Anonymous'}
                     </span>
                     {user && user.id === reply.user_id && (
                       <button
                         onClick={() => handleDeleteReply(reply.id)}
-                        className="text-xs text-red-600 hover:underline"
+                        className="text-xs text-red-600 dark:text-red-400 hover:underline"
                       >
                         Delete
                       </button>
                     )}
                   </div>
-                  <p className="text-gray-700 text-sm mt-1">{reply.body}</p>
-                  <p className="text-xs text-gray-400 mt-1">
+                  <p className="text-gray-700 dark:text-gray-300 text-sm mt-1">{reply.body}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                     {new Date(reply.created_at).toLocaleDateString()}
                   </p>
                 </div>
@@ -631,7 +635,7 @@ export default function BookDetails() {
                   value={replyBody}
                   onChange={(e) => setReplyBody(e.target.value)}
                   placeholder="Write a reply..."
-                  className="flex-1 px-3 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 outline-none text-sm"
+                  className="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
                 />
                 <button
                   type="submit"
@@ -642,25 +646,25 @@ export default function BookDetails() {
                 </button>
               </form>
             ) : (
-              <p className="text-sm text-gray-500 ml-4">
-                <Link to="/login" className="text-indigo-600 hover:underline">Login</Link> to reply.
+              <p className="text-sm text-gray-500 dark:text-gray-400 ml-4">
+                <Link to="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline">Login</Link> to reply.
               </p>
             )}
           </div>
         ) : (
           /* Discussion List */
           discussions.length === 0 ? (
-            <p className="text-gray-500 text-sm">No discussions yet. Start one!</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">No discussions yet. Start one!</p>
           ) : (
             <div className="space-y-3">
               {discussions.map((d) => (
                 <button
                   key={d.id}
                   onClick={() => handleOpenDiscussion(d)}
-                  className="w-full text-left bg-white border border-gray-200 rounded-lg p-4 hover:border-indigo-300 transition"
+                  className="w-full text-left bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-indigo-300 dark:hover:border-indigo-600 transition"
                 >
-                  <h3 className="font-medium text-gray-900">{d.title}</h3>
-                  <div className="flex items-center gap-2 mt-1 text-xs text-gray-400">
+                  <h3 className="font-medium text-gray-900 dark:text-white">{d.title}</h3>
+                  <div className="flex items-center gap-2 mt-1 text-xs text-gray-400 dark:text-gray-500">
                     <span>{d.profiles?.display_name || 'Anonymous'}</span>
                     <span>&middot;</span>
                     <span>{new Date(d.created_at).toLocaleDateString()}</span>

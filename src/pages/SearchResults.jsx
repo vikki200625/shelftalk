@@ -45,7 +45,7 @@ export default function SearchResults() {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search by title, author, or keyword..."
-            className="w-full px-5 py-3 pr-14 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
+            className="w-full px-5 py-3 pr-14 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500"
           />
           <button
             type="submit"
@@ -59,10 +59,10 @@ export default function SearchResults() {
       </form>
 
       {query && (
-        <h1 className="text-xl font-semibold text-gray-900 mb-6">
+        <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
           {loading ? 'Searching...' : `Results for "${query}"`}
           {!loading && results.total > 0 && (
-            <span className="text-gray-500 font-normal text-base ml-2">
+            <span className="text-gray-500 dark:text-gray-400 font-normal text-base ml-2">
               ({results.total.toLocaleString()} books found)
             </span>
           )}
@@ -70,7 +70,7 @@ export default function SearchResults() {
       )}
 
       {error && (
-        <div className="bg-red-50 text-red-700 p-4 rounded-lg mb-6">
+        <div className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 p-4 rounded-lg mb-6">
           {error}
         </div>
       )}
@@ -79,9 +79,9 @@ export default function SearchResults() {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
           {Array.from({ length: 20 }).map((_, i) => (
             <div key={i} className="animate-pulse">
-              <div className="aspect-[2/3] bg-gray-200 rounded-lg mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4 mb-1"></div>
-              <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+              <div className="aspect-[2/3] bg-gray-200 dark:bg-gray-700 rounded-lg mb-2"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-1"></div>
+              <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
             </div>
           ))}
         </div>
@@ -91,7 +91,7 @@ export default function SearchResults() {
         <>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {results.books.map((book) => (
-              <BookCard key={book.key} book={book} />
+              <BookCard key={book.id || book.workId} book={book} />
             ))}
           </div>
 
@@ -100,17 +100,17 @@ export default function SearchResults() {
               <button
                 onClick={() => handlePageChange(page - 1)}
                 disabled={page <= 1}
-                className="px-4 py-2 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
+                className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-800 transition"
               >
                 Previous
               </button>
-              <span className="text-sm text-gray-600 px-3">
+              <span className="text-sm text-gray-600 dark:text-gray-400 px-3">
                 Page {page} of {totalPages}
               </span>
               <button
                 onClick={() => handlePageChange(page + 1)}
                 disabled={page >= totalPages}
-                className="px-4 py-2 rounded-lg border border-gray-300 text-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
+                className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-sm text-gray-700 dark:text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-gray-800 transition"
               >
                 Next
               </button>
@@ -121,11 +121,11 @@ export default function SearchResults() {
 
       {!loading && query && results.books.length === 0 && (
         <div className="text-center py-16">
-          <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p className="text-gray-500 text-lg">No books found for "{query}"</p>
-          <p className="text-gray-400 text-sm mt-1">Try a different search term</p>
+          <p className="text-gray-500 dark:text-gray-400 text-lg">No books found for "{query}"</p>
+          <p className="text-gray-400 dark:text-gray-500 text-sm mt-1">Try a different search term</p>
         </div>
       )}
     </div>
