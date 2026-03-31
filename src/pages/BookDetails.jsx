@@ -7,6 +7,7 @@ import { useToast } from '../contexts/ToastContext'
 import supabase from '../lib/supabase'
 import StarRating from '../components/StarRating'
 import ProgressBar from '../components/ProgressBar'
+import SpoilerWrapper from '../components/SpoilerWrapper'
 
 const STATUS_OPTIONS = [
   { value: 'want_to_read', label: 'Want to Read' },
@@ -31,15 +32,18 @@ export default function BookDetails() {
   const [userReview, setUserReview] = useState(null)
   const [reviewRating, setReviewRating] = useState(0)
   const [reviewBody, setReviewBody] = useState('')
+  const [reviewSpoiler, setReviewSpoiler] = useState(false)
   const [editingReview, setEditingReview] = useState(false)
 
   const [discussions, setDiscussions] = useState([])
   const [showNewDiscussion, setShowNewDiscussion] = useState(false)
   const [newDiscussionTitle, setNewDiscussionTitle] = useState('')
   const [newDiscussionBody, setNewDiscussionBody] = useState('')
+  const [newDiscussionSpoiler, setNewDiscussionSpoiler] = useState(false)
   const [activeDiscussion, setActiveDiscussion] = useState(null)
   const [replies, setReplies] = useState([])
   const [replyBody, setReplyBody] = useState('')
+  const [replySpoiler, setReplySpoiler] = useState(false)
 
   const [saving, setSaving] = useState(false)
   const [currentPage, setCurrentPage] = useState(0)
@@ -134,6 +138,7 @@ export default function BookDetails() {
       setUserReview(data)
       setReviewRating(data.rating)
       setReviewBody(data.body || '')
+      setReviewSpoiler(data.is_spoiler || false)
     }
   }
 
@@ -253,13 +258,13 @@ export default function BookDetails() {
     if (userReview && editingReview) {
       await supabase
         .from('reviews')
-        .update({ rating: reviewRating, body: reviewBody, updated_at: new Date().toISOString() })
+        .update({ rating: reviewRating, body: reviewBody, is_spoiler: reviewSpoiler, updated_at: new Date().toISOString() })
         .eq('id', userReview.id)
       showToast('Review updated!', 'success')
     } else {
       await supabase
         .from('reviews')
-        .insert({ user_id: user.id, book_id: dbBookId, rating: reviewRating, body: reviewBody })
+        .insert({ user_id: user.id, book_id: dbBookId, rating: reviewRating, body: reviewBody, is_spoiler: reviewSpoiler })
       showToast('Review posted!', 'success')
     }
 
@@ -294,6 +299,7 @@ export default function BookDetails() {
         book_id: dbBookId,
         title: newDiscussionTitle.trim(),
         body: newDiscussionBody.trim(),
+        is_spoiler: newDiscussionSpoiler,
       })
 
     setNewDiscussionTitle('')
@@ -320,6 +326,7 @@ export default function BookDetails() {
         discussion_id: activeDiscussion.id,
         user_id: user.id,
         body: replyBody.trim(),
+        is_spoiler: replySpoiler,
       })
 
     setReplyBody('')
@@ -598,6 +605,15 @@ export default function BookDetails() {
                   rows={3}
                   className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
                 />
+                <label className="flex items-center gap-2 mt-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={reviewSpoiler}
+                    onChange={(e) => setReviewSpoiler(e.target.checked)}
+                    className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Contains spoilers</span>
+                </label>
                 <div className="flex gap-2 mt-3">
                   <button
                     type="submit"
@@ -639,8 +655,15 @@ export default function BookDetails() {
                       {review.profiles?.display_name || 'Anonymous'}
                     </span>
                     <StarRating value={review.rating} readOnly size="sm" />
+                    {review.is_spoiler && (
+                      <span className="text-xs bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded">Spoilers</span>
+                    )}
                   </div>
-                  {review.body && <p className="text-gray-700 dark:text-gray-300 text-sm mt-1">{review.body}</p>}
+                  {review.body && (
+                    <SpoilerWrapper isSpoiler={review.is_spoiler}>
+                      <p className="text-gray-700 dark:text-gray-300 text-sm mt-1">{review.body}</p>
+                    </SpoilerWrapper>
+                  )}
                   <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                     {new Date(review.created_at).toLocaleDateString()}
                   </p>
@@ -681,6 +704,15 @@ export default function BookDetails() {
               rows={3}
               className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
             />
+            <label className="flex items-center gap-2 mb-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={newDiscussionSpoiler}
+                onChange={(e) => setNewDiscussionSpoiler(e.target.checked)}
+                className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500"
+              />
+              <span className="text-sm text-gray-600 dark:text-gray-400">Contains spoilers</span>
+            </label>
             <button
               type="submit"
               disabled={saving || !newDiscussionTitle.trim()}
@@ -717,7 +749,9 @@ export default function BookDetails() {
                 )}
               </div>
               {activeDiscussion.body && (
-                <p className="text-gray-700 dark:text-gray-300 text-sm mt-2">{activeDiscussion.body}</p>
+                <SpoilerWrapper isSpoiler={activeDiscussion.is_spoiler}>
+                  <p className="text-gray-700 dark:text-gray-300 text-sm mt-2">{activeDiscussion.body}</p>
+                </SpoilerWrapper>
               )}
               <div className="flex items-center gap-2 mt-2 text-xs text-gray-400 dark:text-gray-500">
                 <span>{activeDiscussion.profiles?.display_name || 'Anonymous'}</span>
@@ -731,9 +765,14 @@ export default function BookDetails() {
               {replies.map((reply) => (
                 <div key={reply.id} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
                   <div className="flex items-center justify-between">
-                    <span className="font-medium text-sm text-gray-900 dark:text-white">
-                      {reply.profiles?.display_name || 'Anonymous'}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium text-sm text-gray-900 dark:text-white">
+                        {reply.profiles?.display_name || 'Anonymous'}
+                      </span>
+                      {reply.is_spoiler && (
+                        <span className="text-xs bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded">Spoilers</span>
+                      )}
+                    </div>
                     {user && user.id === reply.user_id && (
                       <button
                         onClick={() => handleDeleteReply(reply.id)}
@@ -743,7 +782,9 @@ export default function BookDetails() {
                       </button>
                     )}
                   </div>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm mt-1">{reply.body}</p>
+                  <SpoilerWrapper isSpoiler={reply.is_spoiler}>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm mt-1">{reply.body}</p>
+                  </SpoilerWrapper>
                   <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                     {new Date(reply.created_at).toLocaleDateString()}
                   </p>
@@ -753,22 +794,33 @@ export default function BookDetails() {
 
             {/* Reply Form */}
             {user ? (
-              <form onSubmit={handlePostReply} className="flex gap-2 ml-4">
-                <input
-                  type="text"
-                  value={replyBody}
-                  onChange={(e) => setReplyBody(e.target.value)}
-                  placeholder="Write a reply..."
-                  className="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
-                />
-                <button
-                  type="submit"
-                  disabled={saving || !replyBody.trim()}
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm disabled:opacity-50"
-                >
-                  Reply
-                </button>
-              </form>
+              <div className="ml-4">
+                <form onSubmit={handlePostReply} className="flex gap-2">
+                  <input
+                    type="text"
+                    value={replyBody}
+                    onChange={(e) => setReplyBody(e.target.value)}
+                    placeholder="Write a reply..."
+                    className="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
+                  />
+                  <button
+                    type="submit"
+                    disabled={saving || !replyBody.trim()}
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm disabled:opacity-50"
+                  >
+                    Reply
+                  </button>
+                </form>
+                <label className="flex items-center gap-2 mt-2 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={replySpoiler}
+                    onChange={(e) => setReplySpoiler(e.target.checked)}
+                    className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500"
+                  />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">Contains spoilers</span>
+                </label>
+              </div>
             ) : (
               <p className="text-sm text-gray-500 dark:text-gray-400 ml-4">
                 <Link to="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline">Login</Link> to reply.
