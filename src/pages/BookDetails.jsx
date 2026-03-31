@@ -5,6 +5,7 @@ import { addToRecentlyViewed } from '../lib/recentlyViewed'
 import { useAuth } from '../contexts/AuthContext'
 import supabase from '../lib/supabase'
 import StarRating from '../components/StarRating'
+import ProgressBar from '../components/ProgressBar'
 
 const STATUS_OPTIONS = [
   { value: 'want_to_read', label: 'Want to Read' },
@@ -39,6 +40,9 @@ export default function BookDetails() {
   const [replyBody, setReplyBody] = useState('')
 
   const [saving, setSaving] = useState(false)
+  const [currentPage, setCurrentPage] = useState(0)
+  const [editingProgress, setEditingProgress] = useState(false)
+  const [progressInput, setProgressInput] = useState('')
 
   const bookKey = book?.id || book?.workId || id
 
@@ -91,6 +95,7 @@ export default function BookDetails() {
           cover_url: book.coverUrl,
           publish_year: book.publishYear ? parseInt(book.publishYear) : null,
           subjects: book.categories || book.subjects || [],
+          page_count: book.pageCount || null,
         })
         .select('id')
         .single()
@@ -104,12 +109,15 @@ export default function BookDetails() {
   async function fetchLibraryStatus(bookId) {
     const { data } = await supabase
       .from('user_library')
-      .select('status')
+      .select('status, current_page')
       .eq('user_id', user.id)
       .eq('book_id', bookId)
       .single()
 
-    if (data) setLibraryStatus(data.status)
+    if (data) {
+      setLibraryStatus(data.status)
+      setCurrentPage(data.current_page || 0)
+    }
   }
 
   async function fetchUserReview(bookId) {
@@ -161,14 +169,20 @@ export default function BookDetails() {
     if (!user || !dbBookId) return
     setSaving(true)
 
+    const updates = {
+      user_id: user.id,
+      book_id: dbBookId,
+      status,
+      updated_at: new Date().toISOString(),
+    }
+
+    if (status === 'reading') {
+      updates.started_at = new Date().toISOString()
+    }
+
     const { error } = await supabase
       .from('user_library')
-      .upsert({
-        user_id: user.id,
-        book_id: dbBookId,
-        status,
-        updated_at: new Date().toISOString(),
-      })
+      .upsert(updates)
 
     if (!error) setLibraryStatus(status)
     setSaving(false)
@@ -185,6 +199,38 @@ export default function BookDetails() {
       .eq('book_id', dbBookId)
 
     setLibraryStatus(null)
+    setCurrentPage(0)
+    setSaving(false)
+  }
+
+  async function handleSaveProgress() {
+    if (!user || !dbBookId) return
+    const page = parseInt(progressInput)
+    if (isNaN(page) || page < 0) return
+    setSaving(true)
+
+    const totalPages = book?.pageCount
+    const updates = {
+      current_page: page,
+      updated_at: new Date().toISOString(),
+    }
+
+    if (totalPages && page >= totalPages) {
+      updates.status = 'completed'
+      updates.finished_at = new Date().toISOString()
+    }
+
+    await supabase
+      .from('user_library')
+      .update(updates)
+      .eq('user_id', user.id)
+      .eq('book_id', dbBookId)
+
+    setCurrentPage(page)
+    if (totalPages && page >= totalPages) {
+      setLibraryStatus('completed')
+    }
+    setEditingProgress(false)
     setSaving(false)
   }
 
@@ -364,35 +410,95 @@ export default function BookDetails() {
 
           {/* Library Controls */}
           {user && (
-            <div className="mt-4 flex items-center gap-3 flex-wrap">
-              {libraryStatus ? (
-                <>
-                  <select
-                    value={libraryStatus}
-                    onChange={(e) => handleAddToLibrary(e.target.value)}
-                    disabled={saving}
-                    className="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
-                  >
-                    {STATUS_OPTIONS.map((opt) => (
-                      <option key={opt.value} value={opt.value}>{opt.label}</option>
-                    ))}
-                  </select>
+            <div className="mt-4 space-y-3">
+              <div className="flex items-center gap-3 flex-wrap">
+                {libraryStatus ? (
+                  <>
+                    <select
+                      value={libraryStatus}
+                      onChange={(e) => handleAddToLibrary(e.target.value)}
+                      disabled={saving}
+                      className="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                    >
+                      {STATUS_OPTIONS.map((opt) => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={handleRemoveFromLibrary}
+                      disabled={saving}
+                      className="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition"
+                    >
+                      Remove
+                    </button>
+                  </>
+                ) : (
                   <button
-                    onClick={handleRemoveFromLibrary}
+                    onClick={() => handleAddToLibrary('want_to_read')}
                     disabled={saving}
-                    className="text-sm text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition"
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm"
                   >
-                    Remove
+                    + Add to Library
                   </button>
-                </>
-              ) : (
-                <button
-                  onClick={() => handleAddToLibrary('want_to_read')}
-                  disabled={saving}
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm"
-                >
-                  + Add to Library
-                </button>
+                )}
+              </div>
+
+              {/* Reading Progress */}
+              {libraryStatus === 'reading' && (
+                <div className="max-w-xs">
+                  {book.pageCount ? (
+                    <>
+                      {!editingProgress ? (
+                        <div>
+                          <ProgressBar
+                            current={currentPage}
+                            total={book.pageCount}
+                          />
+                          <button
+                            onClick={() => {
+                              setEditingProgress(true)
+                              setProgressInput(currentPage.toString())
+                            }}
+                            className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline mt-1"
+                          >
+                            Update Progress
+                          </button>
+                        </div>
+                      ) : (
+                        <div>
+                          <div className="flex items-center gap-2 mb-2">
+                            <input
+                              type="number"
+                              value={progressInput}
+                              onChange={(e) => setProgressInput(e.target.value)}
+                              min="0"
+                              max={book.pageCount}
+                              className="w-20 px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                            />
+                            <span className="text-sm text-gray-500 dark:text-gray-400">/ {book.pageCount} pages</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={handleSaveProgress}
+                              disabled={saving}
+                              className="bg-indigo-600 text-white px-3 py-1 rounded-lg text-xs hover:bg-indigo-700 transition disabled:opacity-50"
+                            >
+                              {saving ? 'Saving...' : 'Save'}
+                            </button>
+                            <button
+                              onClick={() => setEditingProgress(false)}
+                              className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <p className="text-xs text-gray-400 dark:text-gray-500">Page count not available for this book</p>
+                  )}
+                </div>
               )}
             </div>
           )}
