@@ -1,14 +1,17 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useTheme } from '../contexts/ThemeContext'
+import { useToast } from '../contexts/ToastContext'
 import supabase from '../lib/supabase'
 
 export default function Navbar() {
   const { user } = useAuth()
   const { dark, toggleTheme } = useTheme()
+  const { showToast } = useToast()
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
+    showToast('Logged out', 'info')
   }
 
   return (

@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import supabase from '../lib/supabase'
+import { useToast } from '../contexts/ToastContext'
 
 export default function Login() {
   const navigate = useNavigate()
+  const { showToast } = useToast()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -22,6 +24,7 @@ export default function Login() {
     if (error) {
       setError(error.message)
     } else {
+      showToast('Welcome back!', 'success')
       navigate('/')
     }
     setLoading(false)

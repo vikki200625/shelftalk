@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { getBookDetails } from '../lib/bookService'
 import { addToRecentlyViewed } from '../lib/recentlyViewed'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 import supabase from '../lib/supabase'
 import StarRating from '../components/StarRating'
 import ProgressBar from '../components/ProgressBar'
@@ -17,6 +18,7 @@ const STATUS_OPTIONS = [
 export default function BookDetails() {
   const { id } = useParams()
   const { user } = useAuth()
+  const { showToast } = useToast()
 
   const [book, setBook] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -184,7 +186,12 @@ export default function BookDetails() {
       .from('user_library')
       .upsert(updates)
 
-    if (!error) setLibraryStatus(status)
+    if (!error) {
+      setLibraryStatus(status)
+      showToast('Book added to library!', 'success')
+    } else {
+      showToast('Failed to add book', 'error')
+    }
     setSaving(false)
   }
 
@@ -200,6 +207,7 @@ export default function BookDetails() {
 
     setLibraryStatus(null)
     setCurrentPage(0)
+    showToast('Book removed from library', 'success')
     setSaving(false)
   }
 
@@ -229,6 +237,9 @@ export default function BookDetails() {
     setCurrentPage(page)
     if (totalPages && page >= totalPages) {
       setLibraryStatus('completed')
+      showToast('Congratulations! Book completed!', 'success')
+    } else {
+      showToast('Progress updated!', 'success')
     }
     setEditingProgress(false)
     setSaving(false)
@@ -244,10 +255,12 @@ export default function BookDetails() {
         .from('reviews')
         .update({ rating: reviewRating, body: reviewBody, updated_at: new Date().toISOString() })
         .eq('id', userReview.id)
+      showToast('Review updated!', 'success')
     } else {
       await supabase
         .from('reviews')
         .insert({ user_id: user.id, book_id: dbBookId, rating: reviewRating, body: reviewBody })
+      showToast('Review posted!', 'success')
     }
 
     setEditingReview(false)
@@ -265,6 +278,7 @@ export default function BookDetails() {
     setReviewRating(0)
     setReviewBody('')
     fetchReviews(dbBookId)
+    showToast('Review deleted', 'info')
     setSaving(false)
   }
 
@@ -286,6 +300,7 @@ export default function BookDetails() {
     setNewDiscussionBody('')
     setShowNewDiscussion(false)
     fetchDiscussions(dbBookId)
+    showToast('Discussion posted!', 'success')
     setSaving(false)
   }
 
@@ -309,6 +324,7 @@ export default function BookDetails() {
 
     setReplyBody('')
     fetchReplies(activeDiscussion.id)
+    showToast('Reply posted!', 'success')
     setSaving(false)
   }
 
@@ -316,11 +332,13 @@ export default function BookDetails() {
     await supabase.from('discussions').delete().eq('id', discussionId)
     setActiveDiscussion(null)
     fetchDiscussions(dbBookId)
+    showToast('Discussion deleted', 'info')
   }
 
   async function handleDeleteReply(replyId) {
     await supabase.from('discussion_replies').delete().eq('id', replyId)
     fetchReplies(activeDiscussion.id)
+    showToast('Reply deleted', 'info')
   }
 
   if (loading) {

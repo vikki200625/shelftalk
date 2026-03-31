@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import supabase from '../lib/supabase'
+import { useToast } from '../contexts/ToastContext'
 
 export default function Signup() {
   const navigate = useNavigate()
+  const { showToast } = useToast()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -29,6 +31,7 @@ export default function Signup() {
     if (error) {
       setError(error.message)
     } else {
+      showToast('Account created! Welcome to ShelfTalk!', 'success')
       navigate('/')
     }
     setLoading(false)

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 import supabase from '../lib/supabase'
 import ReadingGoal from '../components/ReadingGoal'
 import ProgressBar from '../components/ProgressBar'
@@ -22,6 +23,7 @@ const STATUS_LABELS = {
 
 export default function MyLibrary() {
   const { user, loading: authLoading } = useAuth()
+  const { showToast } = useToast()
   const [books, setBooks] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('all')
@@ -70,6 +72,7 @@ export default function MyLibrary() {
       .eq('user_id', user.id)
       .eq('book_id', bookId)
 
+    showToast('Status updated!', 'success')
     fetchLibrary()
   }
 
@@ -80,6 +83,7 @@ export default function MyLibrary() {
       .eq('user_id', user.id)
       .eq('book_id', bookId)
 
+    showToast('Book removed from library', 'success')
     fetchLibrary()
   }
 
@@ -91,6 +95,7 @@ export default function MyLibrary() {
       .eq('book_id', bookId)
 
     setEditingNotes(null)
+    showToast('Notes saved!', 'success')
     fetchLibrary()
   }
 
@@ -118,6 +123,11 @@ export default function MyLibrary() {
 
     setEditingProgress(null)
     setSaving(false)
+    if (totalPages && page >= totalPages) {
+      showToast('Congratulations! Book completed!', 'success')
+    } else {
+      showToast('Progress updated!', 'success')
+    }
     fetchLibrary()
   }
 
