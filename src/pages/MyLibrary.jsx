@@ -5,6 +5,7 @@ import { useToast } from '../contexts/ToastContext'
 import supabase from '../lib/supabase'
 import ReadingGoal from '../components/ReadingGoal'
 import ProgressBar from '../components/ProgressBar'
+import LibraryItemSkeleton from '../components/LibraryItemSkeleton'
 
 const STATUS_TABS = [
   { value: 'all', label: 'All' },
@@ -148,9 +149,9 @@ export default function MyLibrary() {
   if (authLoading) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="animate-pulse space-y-4">
+        <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="h-24 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+            <LibraryItemSkeleton key={i} />
           ))}
         </div>
       </div>
@@ -184,14 +185,7 @@ export default function MyLibrary() {
       {loading ? (
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
-            <div key={i} className="animate-pulse flex gap-4 p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-              <div className="w-16 h-24 bg-gray-200 dark:bg-gray-700 rounded flex-shrink-0"></div>
-              <div className="flex-1">
-                <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-3"></div>
-                <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-32"></div>
-              </div>
-            </div>
+            <LibraryItemSkeleton key={i} />
           ))}
         </div>
       ) : books.length === 0 ? (

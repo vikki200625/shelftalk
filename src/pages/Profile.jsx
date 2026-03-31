@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 import supabase from '../lib/supabase'
 
 export default function Profile() {
   const { user, loading: authLoading } = useAuth()
+  const { showToast } = useToast()
   const [profile, setProfile] = useState(null)
   const [stats, setStats] = useState({ library: 0, reviews: 0, discussions: 0, followers: 0, following: 0 })
   const [loading, setLoading] = useState(true)
@@ -63,6 +65,7 @@ export default function Profile() {
     setEditing(false)
     fetchProfile()
     setSaving(false)
+    showToast('Profile updated!', 'success')
   }
 
   if (!authLoading && !user) {

@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 import supabase from '../lib/supabase'
 
 export default function BookLists() {
   const { user, loading: authLoading } = useAuth()
+  const { showToast } = useToast()
   const [lists, setLists] = useState([])
   const [loading, setLoading] = useState(true)
   const [showCreate, setShowCreate] = useState(false)
@@ -47,10 +49,12 @@ export default function BookLists() {
     setShowCreate(false)
     fetchLists()
     setSaving(false)
+    showToast('List created!', 'success')
   }
 
   async function handleDelete(listId) {
     await supabase.from('book_lists').delete().eq('id', listId)
+    showToast('List deleted', 'info')
     fetchLists()
   }
 
