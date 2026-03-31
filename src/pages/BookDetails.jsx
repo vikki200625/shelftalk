@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { getBookDetails } from '../lib/openLibrary'
+import { getBookDetails } from '../lib/bookService'
 import { useAuth } from '../contexts/AuthContext'
 import supabase from '../lib/supabase'
 import StarRating from '../components/StarRating'
@@ -39,6 +39,8 @@ export default function BookDetails() {
 
   const [saving, setSaving] = useState(false)
 
+  const bookKey = book?.id || book?.workId || id
+
   useEffect(() => {
     setLoading(true)
     setError(null)
@@ -62,7 +64,7 @@ export default function BookDetails() {
     const { data: existing } = await supabase
       .from('books')
       .select('id')
-      .eq('open_library_key', book.key)
+      .eq('open_library_key', bookKey)
       .single()
 
     if (existing) {
@@ -77,14 +79,14 @@ export default function BookDetails() {
       const { data: inserted } = await supabase
         .from('books')
         .insert({
-          open_library_key: book.key,
-          title: book.title,
+          open_library_key: bookKey,
+          title: book.title + (book.subtitle ? `: ${book.subtitle}` : ''),
           author: book.authors.join(', '),
-          isbn: book.isbn,
+          isbn: book.isbn13 || book.isbn10 || book.isbn,
           description: book.description,
           cover_url: book.coverUrl,
           publish_year: book.publishYear ? parseInt(book.publishYear) : null,
-          subjects: book.subjects,
+          subjects: book.categories || book.subjects || [],
         })
         .select('id')
         .single()
@@ -297,13 +299,15 @@ export default function BookDetails() {
 
   if (!book) return null
 
+  const tags = book.categories || book.subjects || []
+  const authorsText = book.authors.join(', ') || 'Unknown Author'
   const amazonSearchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(book.title + ' ' + book.authors.join(' '))}&i=stripbooks`
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Book Info */}
-      <div className="flex gap-8 mb-10">
-        <div className="w-48 flex-shrink-0">
+      <div className="flex gap-8 mb-10 flex-col sm:flex-row">
+        <div className="w-48 flex-shrink-0 mx-auto sm:mx-0">
           {book.coverUrl ? (
             <img src={book.coverUrl} alt={book.title} className="w-full rounded-lg shadow-md" />
           ) : (
@@ -316,20 +320,37 @@ export default function BookDetails() {
         </div>
 
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">{book.title}</h1>
-          <p className="text-gray-600 mb-1">
-            by {book.authors.join(', ') || 'Unknown Author'}
-          </p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">{book.title}</h1>
+          {book.subtitle && (
+            <p className="text-gray-500 mb-2">{book.subtitle}</p>
+          )}
+          <p className="text-gray-600 mb-1">by {authorsText}</p>
+
+          {book.averageRating && (
+            <div className="flex items-center gap-2 mb-2">
+              <StarRating value={Math.round(book.averageRating)} readOnly size="sm" />
+              <span className="text-sm text-gray-500">
+                {book.averageRating.toFixed(1)} ({book.ratingsCount} ratings)
+              </span>
+            </div>
+          )}
+
           {book.publishYear && (
             <p className="text-gray-500 text-sm mb-1">Published: {book.publishYear}</p>
           )}
-          {book.isbn && (
-            <p className="text-gray-500 text-sm mb-1">ISBN: {book.isbn}</p>
+          {book.publisher && (
+            <p className="text-gray-500 text-sm mb-1">Publisher: {book.publisher}</p>
+          )}
+          {book.pageCount && (
+            <p className="text-gray-500 text-sm mb-1">{book.pageCount} pages</p>
+          )}
+          {(book.isbn13 || book.isbn10 || book.isbn) && (
+            <p className="text-gray-500 text-sm mb-1">ISBN: {book.isbn13 || book.isbn10 || book.isbn}</p>
           )}
 
-          {book.subjects.length > 0 && (
+          {tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-3 mb-4">
-              {book.subjects.map((s, i) => (
+              {tags.slice(0, 5).map((s, i) => (
                 <span key={i} className="text-xs bg-indigo-50 text-indigo-700 px-2 py-1 rounded">
                   {s}
                 </span>
@@ -397,7 +418,10 @@ export default function BookDetails() {
       {book.description && (
         <div className="mb-10">
           <h2 className="text-lg font-semibold text-gray-900 mb-3">Description</h2>
-          <p className="text-gray-700 leading-relaxed whitespace-pre-line">{book.description}</p>
+          <div
+            className="text-gray-700 leading-relaxed prose prose-sm max-w-none"
+            dangerouslySetInnerHTML={{ __html: book.description }}
+          />
         </div>
       )}
 

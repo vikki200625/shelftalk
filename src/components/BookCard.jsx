@@ -1,15 +1,19 @@
 import { Link } from 'react-router-dom'
 
 export default function BookCard({ book }) {
+  const bookId = book.id || book.workId
+  const coverUrl = book.coverUrl
+  const authors = Array.isArray(book.authors) ? book.authors.join(', ') : book.authors || 'Unknown Author'
+
   return (
     <Link
-      to={`/book/${book.workId}`}
+      to={`/book/${bookId}`}
       className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition group"
     >
       <div className="aspect-[2/3] bg-gray-100 overflow-hidden">
-        {book.coverUrl ? (
+        {coverUrl ? (
           <img
-            src={book.coverUrl}
+            src={coverUrl}
             alt={book.title}
             className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
             loading="lazy"
@@ -27,7 +31,7 @@ export default function BookCard({ book }) {
           {book.title}
         </h3>
         <p className="text-xs text-gray-500 mt-1 line-clamp-1">
-          {book.authors.join(', ') || 'Unknown Author'}
+          {authors}
         </p>
         {book.publishYear && (
           <p className="text-xs text-gray-400 mt-1">{book.publishYear}</p>
