@@ -1,15 +1,23 @@
 import * as googleBooks from './googleBooks'
 import * as openLibrary from './openLibrary'
 
-export async function searchBooks(query, page = 1) {
+export async function searchBooks(query, page = 1, filters = {}) {
   try {
-    const results = await googleBooks.searchBooks(query, page)
+    const results = await googleBooks.searchBooks(query, page, filters)
     if (results.books.length > 0) return results
   } catch (err) {
     console.warn('Google Books search failed, trying Open Library:', err.message)
   }
 
   return openLibrary.searchBooks(query, page)
+}
+
+export async function searchBySubject(subject, page = 1) {
+  return searchBooks('', page, { subject })
+}
+
+export async function searchByAuthor(author, page = 1) {
+  return searchBooks('', page, { author })
 }
 
 export async function getBookDetails(id) {

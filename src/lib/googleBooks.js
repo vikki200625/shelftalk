@@ -1,15 +1,31 @@
 const BASE_URL = 'https://www.googleapis.com/books/v1'
 const API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY
 
-export async function searchBooks(query, page = 1) {
+export async function searchBooks(query, page = 1, filters = {}) {
   const startIndex = (page - 1) * 20
+
+  let q = query || ''
+
+  if (filters.subject) {
+    q = q ? `${q}+subject:${filters.subject}` : `subject:${filters.subject}`
+  }
+
+  if (filters.author) {
+    q = q ? `${q}+inauthor:${filters.author}` : `inauthor:${filters.author}`
+  }
+
   const params = new URLSearchParams({
-    q: query,
+    q,
     startIndex,
     maxResults: 20,
     printType: 'books',
+    orderBy: filters.orderBy || 'relevance',
     key: API_KEY,
   })
+
+  if (filters.language) {
+    params.append('langRestrict', filters.language)
+  }
 
   const res = await fetch(`${BASE_URL}/volumes?${params}`)
   if (!res.ok) throw new Error('Failed to search books')
@@ -19,6 +35,14 @@ export async function searchBooks(query, page = 1) {
     total: data.totalItems || 0,
     books: (data.items || []).map(formatSearchResult),
   }
+}
+
+export async function searchBySubject(subject, page = 1) {
+  return searchBooks('', page, { subject })
+}
+
+export async function searchByAuthor(author, page = 1) {
+  return searchBooks('', page, { author })
 }
 
 export async function getBookDetails(volumeId) {

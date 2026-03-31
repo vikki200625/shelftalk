@@ -23,6 +23,9 @@ export default function Navbar() {
             <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
               Home
             </Link>
+            <Link to="/browse" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+              Browse
+            </Link>
             <Link to="/search" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
               Search
             </Link>

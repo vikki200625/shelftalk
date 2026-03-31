@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import Home from './pages/Home'
+import Browse from './pages/Browse'
 import SearchResults from './pages/SearchResults'
 import BookDetails from './pages/BookDetails'
 import MyLibrary from './pages/MyLibrary'
@@ -18,6 +19,7 @@ function App() {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/browse" element={<Browse />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/book/:id" element={<BookDetails />} />
           <Route path="/library" element={<MyLibrary />} />
