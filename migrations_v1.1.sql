@@ -25,3 +25,4 @@ ALTER TABLE public.discussions ADD COLUMN IF NOT EXISTS is_spoiler boolean DEFAU
 
 -- Add spoiler flags to replies
 ALTER TABLE public.discussion_replies ADD COLUMN IF NOT EXISTS is_spoiler boolean DEFAULT false;
+
