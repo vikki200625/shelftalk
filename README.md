@@ -1,16 +1,102 @@
-# React + Vite
+# ShelfTalk 📚
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center">
 
-Currently, two official plugins are available:
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-5-purple?logo=vite)
+![Tailwind](https://img.shields.io/badge/Tailwind-3-cyan?logo=tailwind-css)
+![Supabase](https://img.shields.io/badge/Supabase-3-green?logo=supabase)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+*A modern book discovery platform for tracking your reading journey*
 
-## React Compiler
+</div>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Feature | Description |
+|---------|-------------|
+| 🔍 **Book Discovery** | Explore millions of books via Google Books API with category & author browsing |
+| 📖 **Personal Library** | Track reading progress, manage collections, set reading goals |
+| ⭐ **Reviews & Ratings** | Rate books and share your thoughts with the community |
+| 💬 **Discussions** | Start conversations, reply to readers, mark spoilers |
+| 👥 **Social** | Follow readers, get personalized recommendations |
+| 🌙 **Dark Mode** | Beautiful theme that follows your system preference |
+| ✨ **Polished UX** | Toast notifications, loading skeletons, empty states |
+
+---
+
+## 🛠 Tech Stack
+
+```
+┌─────────────────────────────────────────────────────┐
+│                    Frontend                         │
+│  React 18 • Vite • Tailwind CSS • React Router    │
+├─────────────────────────────────────────────────────┤
+│                     Backend                         │
+│  Supabase (PostgreSQL, Auth, RLS, Realtime)       │
+├─────────────────────────────────────────────────────┤
+│                      APIs                           │
+│  Google Books API • Open Library                   │
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# Clone & install
+git clone https://github.com/vikki200625/shelftalk.git
+cd shelftalk
+npm install
+
+# Set up environment
+cp .env.example .env
+# Add your Supabase URL, Anon Key, and Google Books API key
+
+# Run
+npm run dev
+```
+
+---
+
+## 📁 Project Structure
+
+```
+shelftalk/
+├── src/
+│   ├── components/    # Reusable UI components
+│   ├── contexts/      # React contexts (Auth, Theme, Toast)
+│   ├── lib/           # API integrations
+│   └── pages/         # Route pages
+├── migrations*.sql    # Database schemas
+├── .env               # Environment variables
+└── package.json
+```
+
+---
+
+## 🔧 Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `VITE_SUPABASE_URL` | Your Supabase project URL |
+| `VITE_SUPABASE_ANON_KEY` | Supabase anon key |
+| `VITE_GOOGLE_BOOKS_API_KEY` | Google Books API key |
+
+---
+
+## 📄 License
+
+MIT License • Feel free to use this for your portfolio!
+
+---
+
+<div align="center">
+
+**Made with ☕ and too many books**
+
+</div>
