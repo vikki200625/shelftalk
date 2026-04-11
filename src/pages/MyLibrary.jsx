@@ -148,7 +148,7 @@ export default function MyLibrary() {
 
   if (authLoading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="w-full px-4 py-12">
         <div className="space-y-4">
           {Array.from({ length: 3 }).map((_, i) => (
             <LibraryItemSkeleton key={i} />
@@ -159,7 +159,7 @@ export default function MyLibrary() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">My Library</h1>
 
       {/* Reading Goal */}

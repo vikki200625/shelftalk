@@ -76,7 +76,7 @@ export default function BookListDetail() {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12">
         <p className="text-gray-500 dark:text-gray-400">List not found.</p>
-        <Link to="/lists" className="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">
+        <Link to="/lists" className="text-[#B85C38] dark:text-[#D4A574] hover:underline text-sm">
           Back to lists
         </Link>
       </div>
@@ -88,7 +88,7 @@ export default function BookListDetail() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <Link to="/lists" className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline mb-4 inline-flex items-center gap-1">
+      <Link to="/lists" className="text-sm text-[#B85C38] dark:text-[#D4A574] hover:underline mb-4 inline-flex items-center gap-1">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
@@ -107,7 +107,7 @@ export default function BookListDetail() {
             {availableBooks.length > 0 && (
               <button
                 onClick={() => setShowAddBook(!showAddBook)}
-                className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm"
+                className="btn-warm"
               >
                 {showAddBook ? 'Cancel' : '+ Add Book'}
               </button>
@@ -156,12 +156,12 @@ export default function BookListDetail() {
               {availableBooks.length > 0 ? (
                 <button
                   onClick={() => setShowAddBook(true)}
-                  className="text-indigo-600 dark:text-indigo-400 hover:underline text-sm"
+                  className="text-[#B85C38] dark:text-[#D4A574] hover:underline text-sm"
                 >
                   Add books from your library
                 </button>
               ) : (
-                <Link to="/" className="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">
+                <Link to="/" className="text-[#B85C38] dark:text-[#D4A574] hover:underline text-sm">
                   Add books to your library first
                 </Link>
               )}

@@ -426,7 +426,7 @@ export default function BookDetails() {
           {tags.length > 0 && (
             <div className="flex flex-wrap gap-1 mt-3 mb-4">
               {tags.slice(0, 5).map((s, i) => (
-                <span key={i} className="text-xs bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 px-2 py-1 rounded">
+                <span key={i} className="text-xs bg-purple-50 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-2 py-1 rounded-xl">
                   {s}
                 </span>
               ))}
@@ -443,7 +443,7 @@ export default function BookDetails() {
                       value={libraryStatus}
                       onChange={(e) => handleAddToLibrary(e.target.value)}
                       disabled={saving}
-                      className="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                      className="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-[#B85C38] outline-none"
                     >
                       {STATUS_OPTIONS.map((opt) => (
                         <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -461,7 +461,7 @@ export default function BookDetails() {
                   <button
                     onClick={() => handleAddToLibrary('want_to_read')}
                     disabled={saving}
-                    className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm"
+                    className="btn-gradient px-4 py-2 rounded-xl hover:opacity-90 transition text-sm"
                   >
                     + Add to Library
                   </button>
@@ -484,7 +484,7 @@ export default function BookDetails() {
                               setEditingProgress(true)
                               setProgressInput(currentPage.toString())
                             }}
-                            className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline mt-1"
+                            className="text-xs text-[#B85C38] dark:text-[#D4A574] hover:underline mt-1"
                           >
                             Update Progress
                           </button>
@@ -498,7 +498,7 @@ export default function BookDetails() {
                               onChange={(e) => setProgressInput(e.target.value)}
                               min="0"
                               max={book.pageCount}
-                              className="w-20 px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                              className="w-20 px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-[#B85C38] outline-none"
                             />
                             <span className="text-sm text-gray-500 dark:text-gray-400">/ {book.pageCount} pages</span>
                           </div>
@@ -506,7 +506,7 @@ export default function BookDetails() {
                             <button
                               onClick={handleSaveProgress}
                               disabled={saving}
-                              className="bg-indigo-600 text-white px-3 py-1 rounded-lg text-xs hover:bg-indigo-700 transition disabled:opacity-50"
+                              className="btn-gradient px-3 py-1 rounded-xl text-xs hover:opacity-90 transition disabled:opacity-50"
                             >
                               {saving ? 'Saving...' : 'Save'}
                             </button>
@@ -530,7 +530,7 @@ export default function BookDetails() {
 
           {!user && (
             <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-              <Link to="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline">Login</Link> to add this book to your library.
+              <Link to="/login" className="text-[#B85C38] dark:text-[#D4A574] hover:underline">Login</Link> to add this book to your library.
             </p>
           )}
 
@@ -578,7 +578,7 @@ export default function BookDetails() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setEditingReview(true)}
-                    className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+                    className="text-sm text-[#B85C38] dark:text-[#D4A574] hover:underline"
                   >
                     Edit
                   </button>
@@ -603,14 +603,14 @@ export default function BookDetails() {
                   onChange={(e) => setReviewBody(e.target.value)}
                   placeholder="Share your thoughts about this book..."
                   rows={3}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
+                  className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none resize-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
                 />
                 <label className="flex items-center gap-2 mt-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={reviewSpoiler}
                     onChange={(e) => setReviewSpoiler(e.target.checked)}
-                    className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500"
+                    className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-purple-600 focus:ring-[#B85C38]"
                   />
                   <span className="text-sm text-gray-600 dark:text-gray-400">Contains spoilers</span>
                 </label>
@@ -618,7 +618,7 @@ export default function BookDetails() {
                   <button
                     type="submit"
                     disabled={saving || reviewRating === 0}
-                    className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm disabled:opacity-50"
+                    className="btn-gradient px-4 py-2 rounded-xl hover:opacity-90 transition text-sm disabled:opacity-50"
                   >
                     {editingReview ? 'Update Review' : 'Submit Review'}
                   </button>
@@ -680,7 +680,7 @@ export default function BookDetails() {
           {user && !activeDiscussion && (
             <button
               onClick={() => setShowNewDiscussion(!showNewDiscussion)}
-              className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+              className="text-sm text-[#B85C38] dark:text-[#D4A574] hover:underline"
             >
               {showNewDiscussion ? 'Cancel' : '+ New Discussion'}
             </button>
@@ -695,28 +695,28 @@ export default function BookDetails() {
               value={newDiscussionTitle}
               onChange={(e) => setNewDiscussionTitle(e.target.value)}
               placeholder="Discussion title..."
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
+              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
             />
             <textarea
               value={newDiscussionBody}
               onChange={(e) => setNewDiscussionBody(e.target.value)}
               placeholder="What's on your mind? (optional)"
               rows={3}
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
+              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none resize-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
             />
             <label className="flex items-center gap-2 mb-3 cursor-pointer">
               <input
                 type="checkbox"
                 checked={newDiscussionSpoiler}
                 onChange={(e) => setNewDiscussionSpoiler(e.target.checked)}
-                className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500"
+                className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-purple-600 focus:ring-[#B85C38]"
               />
               <span className="text-sm text-gray-600 dark:text-gray-400">Contains spoilers</span>
             </label>
             <button
               type="submit"
               disabled={saving || !newDiscussionTitle.trim()}
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm disabled:opacity-50"
+              className="btn-gradient px-4 py-2 rounded-xl hover:opacity-90 transition text-sm disabled:opacity-50"
             >
               Post Discussion
             </button>
@@ -728,7 +728,7 @@ export default function BookDetails() {
           <div>
             <button
               onClick={() => { setActiveDiscussion(null); setReplies([]) }}
-              className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline mb-4 inline-flex items-center gap-1"
+              className="text-sm text-[#B85C38] dark:text-[#D4A574] hover:underline mb-4 inline-flex items-center gap-1"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -736,7 +736,7 @@ export default function BookDetails() {
               Back to discussions
             </button>
 
-            <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-4">
+            <div className="glass-card rounded-2xl p-4 mb-4">
               <div className="flex items-center justify-between">
                 <h3 className="font-semibold text-gray-900 dark:text-white">{activeDiscussion.title}</h3>
                 {user && user.id === activeDiscussion.user_id && (
@@ -801,12 +801,12 @@ export default function BookDetails() {
                     value={replyBody}
                     onChange={(e) => setReplyBody(e.target.value)}
                     placeholder="Write a reply..."
-                    className="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
+                    className="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
                   />
                   <button
                     type="submit"
                     disabled={saving || !replyBody.trim()}
-                    className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition text-sm disabled:opacity-50"
+                    className="btn-gradient px-4 py-2 rounded-xl hover:opacity-90 transition text-sm disabled:opacity-50"
                   >
                     Reply
                   </button>
@@ -816,14 +816,14 @@ export default function BookDetails() {
                     type="checkbox"
                     checked={replySpoiler}
                     onChange={(e) => setReplySpoiler(e.target.checked)}
-                    className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-indigo-600 focus:ring-indigo-500"
+                    className="w-4 h-4 rounded border-gray-300 dark:border-gray-600 text-purple-600 focus:ring-[#B85C38]"
                   />
                   <span className="text-sm text-gray-600 dark:text-gray-400">Contains spoilers</span>
                 </label>
               </div>
             ) : (
               <p className="text-sm text-gray-500 dark:text-gray-400 ml-4">
-                <Link to="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline">Login</Link> to reply.
+                <Link to="/login" className="text-[#B85C38] dark:text-[#D4A574] hover:underline">Login</Link> to reply.
               </p>
             )}
           </div>
@@ -837,7 +837,7 @@ export default function BookDetails() {
                 <button
                   key={d.id}
                   onClick={() => handleOpenDiscussion(d)}
-                  className="w-full text-left bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-indigo-300 dark:hover:border-indigo-600 transition"
+                  className="w-full text-left glass-card rounded-2xl p-4 card-hover"
                 >
                   <h3 className="font-medium text-gray-900 dark:text-white">{d.title}</h3>
                   <div className="flex items-center gap-2 mt-1 text-xs text-gray-400 dark:text-gray-500">

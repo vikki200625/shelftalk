@@ -39,7 +39,7 @@ export default function Signup() {
 
   return (
     <div className="max-w-md mx-auto px-4 py-16">
-      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-8">
+      <div className="glass-card rounded-2xl p-8">
         <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center mb-2">Create Account</h1>
         <p className="text-gray-500 dark:text-gray-400 text-center mb-8">Join ShelfTalk and start your reading journey</p>
 
@@ -55,7 +55,7 @@ export default function Signup() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] focus:border-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500"
               placeholder="BookLover123"
             />
           </div>
@@ -67,7 +67,7 @@ export default function Signup() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] focus:border-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500"
               placeholder="you@example.com"
             />
           </div>
@@ -80,7 +80,7 @@ export default function Signup() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] focus:border-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500"
               placeholder="At least 6 characters"
             />
           </div>
@@ -88,7 +88,7 @@ export default function Signup() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 text-white py-2.5 rounded-lg hover:bg-indigo-700 transition font-medium disabled:opacity-50"
+            className="w-full btn-gradient py-3 rounded-xl hover:opacity-90 transition font-medium disabled:opacity-50"
           >
             {loading ? 'Creating account...' : 'Sign Up'}
           </button>
@@ -96,7 +96,7 @@ export default function Signup() {
 
         <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
           Already have an account?{' '}
-          <Link to="/login" className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium">
+          <Link to="/login" className="text-purple-600 dark:text-purple-400 hover:underline font-medium">
             Sign in
           </Link>
         </p>

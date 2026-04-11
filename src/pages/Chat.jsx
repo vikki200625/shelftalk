@@ -90,7 +90,7 @@ export default function Chat() {
 
   if (!user) {
     return (
-      <div className="max-w-2xl mx-auto px-4 py-12 text-center">
+      <div className="w-full px-4 py-12 text-center">
         <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
           Sign in to chat
         </h2>
@@ -102,10 +102,10 @@ export default function Chat() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8 h-[calc(100vh-8rem)] flex flex-col">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Community Chat</h1>
+    <div className="w-full px-4 py-8 h-[calc(100vh-8rem)] flex flex-col">
+      <h1 className="text-2xl font-bold gradient-text mb-4">Community Chat</h1>
       
-      <div className="flex-1 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col">
+      <div className="flex-1 glass-card rounded-2xl overflow-hidden flex flex-col">
         {loading ? (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-gray-500 dark:text-gray-400">Loading messages...</div>
@@ -125,7 +125,7 @@ export default function Chat() {
                     className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                   />
                 ) : (
-                  <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
                     {getInitials(msg.profiles?.display_name)}
                   </div>
                 )}
@@ -133,10 +133,10 @@ export default function Chat() {
                   <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
                     {msg.profiles?.display_name || 'Unknown'} • {formatTime(msg.created_at)}
                   </div>
-                  <div className={`inline-block px-3 py-2 rounded-lg ${
+                  <div className={`inline-block px-3 py-2 rounded-2xl ${
                     msg.user_id === user.id 
-                      ? 'bg-indigo-600 text-white' 
-                      : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white'
+                      ? 'gradient-bg text-white' 
+                      : 'glass text-gray-900 dark:text-white'
                   }`}>
                     {msg.body}
                   </div>
@@ -154,12 +154,12 @@ export default function Chat() {
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type a message..."
             disabled={sending}
-            className="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+            className="flex-1 px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none"
           />
           <button
             type="submit"
             disabled={sending || !newMessage.trim()}
-            className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition"
+            className="px-5 py-2 btn-gradient rounded-xl hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed transition"
           >
             Send
           </button>

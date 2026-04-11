@@ -36,6 +36,14 @@ export function getCoverUrl(coverId, size = 'M') {
   return `${COVERS_URL}/b/id/${coverId}-${size}.jpg`
 }
 
+function fixHttpUrl(url) {
+  if (!url) return null
+  if (url.startsWith('http://')) {
+    return url.replace('http://', 'https://')
+  }
+  return url
+}
+
 function formatSearchResult(doc) {
   return {
     key: doc.key,
@@ -43,7 +51,7 @@ function formatSearchResult(doc) {
     title: doc.title || 'Unknown Title',
     authors: doc.author_name || [],
     coverId: doc.cover_i || null,
-    coverUrl: getCoverUrl(doc.cover_i),
+    coverUrl: fixHttpUrl(getCoverUrl(doc.cover_i)),
     publishYear: doc.first_publish_year || null,
     isbn: doc.isbn?.[0] || null,
     subjects: (doc.subject || []).slice(0, 5),
@@ -64,7 +72,7 @@ function formatBookDetails(data, workId) {
     title: data.title || 'Unknown Title',
     authors: data.authors?.map(a => a.author?.key) || [],
     coverId: data.covers?.[0] || null,
-    coverUrl: getCoverUrl(data.covers?.[0], 'L'),
+    coverUrl: fixHttpUrl(getCoverUrl(data.covers?.[0], 'L')),
     description,
     subjects: subjects.slice(0, 10),
     publishYear: data.first_publish_date || null,

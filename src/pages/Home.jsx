@@ -25,7 +25,7 @@ export default function Home() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div className="w-full px-4 sm:px-6 lg:px-8 py-16">
       <div className="text-center max-w-2xl mx-auto">
         <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
           Discover Your Next{' '}
@@ -35,7 +35,7 @@ export default function Home() {
           Search millions of books, track your reading, write reviews, and join discussions with fellow book lovers.
         </p>
 
-        <form onSubmit={handleSearch} className="relative max-w-xl mx-auto">
+        <form onSubmit={handleSearch} className="relative w-full max-w-xl">
           <input
             type="text"
             value={query}

@@ -61,7 +61,7 @@ function formatSearchResult(item) {
     id: item.id,
     title: info.title || 'Unknown Title',
     authors: info.authors || [],
-    coverUrl: imageLinks.thumbnail || imageLinks.smallThumbnail || null,
+    coverUrl: fixHttpUrl(imageLinks.thumbnail || imageLinks.smallThumbnail || null),
     publishYear: info.publishedDate?.split('-')[0] || null,
     isbn: getIsbn(info.industryIdentifiers),
     categories: info.categories || [],
@@ -81,7 +81,7 @@ function formatBookDetails(item) {
     title: info.title || 'Unknown Title',
     subtitle: info.subtitle || null,
     authors: info.authors || [],
-    coverUrl: imageLinks.large || imageLinks.medium || imageLinks.thumbnail || imageLinks.smallThumbnail || null,
+    coverUrl: fixHttpUrl(imageLinks.large || imageLinks.medium || imageLinks.thumbnail || imageLinks.smallThumbnail || null),
     description: info.description || null,
     publishYear: info.publishedDate?.split('-')[0] || null,
     publisher: info.publisher || null,
@@ -112,4 +112,12 @@ function getIsbnByType(identifiers, type) {
   if (!identifiers) return null
   const found = identifiers.find(i => i.type === type)
   return found?.identifier || null
+}
+
+function fixHttpUrl(url) {
+  if (!url) return null
+  if (url.startsWith('http://')) {
+    return url.replace('http://', 'https://')
+  }
+  return url
 }
