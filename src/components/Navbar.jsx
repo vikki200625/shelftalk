@@ -41,6 +41,9 @@ export default function Navbar() {
                 <Link to="/lists" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
                   Lists
                 </Link>
+                <Link to="/chat" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+                  Chat
+                </Link>
                 <Link to="/profile" className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition">
                   Profile
                 </Link>

@@ -10,6 +10,7 @@ import MyLibrary from './pages/MyLibrary'
 import BookLists from './pages/BookLists'
 import BookListDetail from './pages/BookListDetail'
 import Profile from './pages/Profile'
+import Chat from './pages/Chat'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/lists" element={<BookLists />} />
           <Route path="/lists/:id" element={<BookListDetail />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
