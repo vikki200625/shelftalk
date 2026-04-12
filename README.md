@@ -9,7 +9,7 @@
   ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 ```
 
-**Your TBR pile just got a glow-up.** 🥺🥺👉👈
+**Your TBR pile just got a glow-up.**
 
 [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
@@ -161,7 +161,7 @@ PRs are welcome. Unsolicited redesigns of the entire frontend are... also welcom
 ## 📜 License
 
 MIT — meaning yes, you can use this, and no, you don't have to credit me.
-But like... it would be nice. Just saying. 👉👈
+But like... it would be nice. Just saying. 👉👈 🥺🥺
 
 ---
 
