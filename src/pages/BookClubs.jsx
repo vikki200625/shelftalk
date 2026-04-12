@@ -75,19 +75,18 @@ export default function BookClubs() {
       return
     }
 
-    console.log('Club created:', data) else {
-      await supabase
-        .from('book_club_members')
-        .insert({
-          club_id: data.id,
-          user_id: user.id,
-          role: 'admin'
-        })
+    console.log('Club created:', data)
+    await supabase
+      .from('book_club_members')
+      .insert({
+        club_id: data.id,
+        user_id: user.id,
+        role: 'admin'
+      })
 
-      showToast('Club created! 🎉', 'success')
-      setShowCreate(false)
-      fetchClubs()
-    }
+    showToast('Club created! 🎉', 'success')
+    setShowCreate(false)
+    fetchClubs()
     setCreating(false)
   }
 
