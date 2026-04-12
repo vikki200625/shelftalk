@@ -13,6 +13,9 @@ import Profile from './pages/Profile'
 import Chat from './pages/Chat'
 import Dashboard from './pages/Dashboard'
 import Friends from './pages/Friends'
+import Recommendations from './pages/Recommendations'
+import BookClubs from './pages/BookClubs'
+import Notes from './pages/Notes'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 
@@ -33,6 +36,9 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/friends" element={<Friends />} />
+          <Route path="/recommendations" element={<Recommendations />} />
+          <Route path="/clubs" element={<BookClubs />} />
+          <Route path="/notes" element={<Notes />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

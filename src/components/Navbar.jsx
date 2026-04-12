@@ -83,8 +83,10 @@ export default function Navbar() {
               <div className="hidden md:flex gap-6 items-center">
                 {[
                   { path: '/dashboard', label: 'Dashboard' },
+                  { path: '/recommendations', label: 'For You' },
                   { path: '/library', label: 'Library' },
                   { path: '/lists', label: 'Lists' },
+                  { path: '/clubs', label: 'Clubs' },
                   { path: '/friends', label: 'Friends' },
                   { path: '/chat', label: 'Chat' },
                 ].map((link) => (
@@ -190,8 +192,10 @@ export default function Navbar() {
             <div className="py-2 space-y-1">
               {user && [
                 { path: '/dashboard', label: 'Dashboard' },
+                { path: '/recommendations', label: 'For You' },
                 { path: '/library', label: 'Library' },
                 { path: '/lists', label: 'Lists' },
+                { path: '/clubs', label: 'Clubs' },
                 { path: '/friends', label: 'Friends' },
                 { path: '/chat', label: 'Chat' },
               ].map((link) => (
