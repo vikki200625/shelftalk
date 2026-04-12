@@ -374,7 +374,16 @@ export default function BookDetails() {
 
   if (!book) return null
 
-  const tags = book.categories || book.subjects || []
+  const PREDEFINED_TAGS = [
+    'Fiction', 'Sci-Fi', 'Fantasy', 'Mystery', 'Thriller', 
+    'Romance', 'Horror', 'Biography', 'History', 'Self-Help'
+  ]
+  
+  const bookText = `${book.title} ${book.authors.join(' ')}`.toLowerCase()
+  const tags = PREDEFINED_TAGS.filter(tag => 
+    bookText.includes(tag.toLowerCase())
+  ).slice(0, 6)
+  
   const authorsText = book.authors.join(', ') || 'Unknown Author'
   const amazonSearchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(book.title + ' ' + book.authors.join(' '))}&i=stripbooks`
 
@@ -424,17 +433,21 @@ export default function BookDetails() {
           )}
 
           {tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 mt-3 mb-4">
-              <span className="text-xs text-gray-500 dark:text-gray-400 mr-1">Tags:</span>
-              {tags.slice(0, 5).map((s, i) => (
-                <Link
-                  key={i}
-                  to={`/search?q=&subject=${encodeURIComponent(s)}`}
-                  className="text-xs bg-purple-50 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-2 py-1 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/70 transition"
-                >
-                  {s}
-                </Link>
-              ))}
+            <div className="mt-4 mb-4">
+              <div className="flex items-center gap-2 flex-wrap">
+                {tags.slice(0, 6).map((s, i) => (
+                  <Link
+                    key={i}
+                    to={`/search?q=&subject=${encodeURIComponent(s)}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-[#B85C38] dark:text-[#D4A574] bg-[#B85C38]/10 dark:bg-[#D4A574]/10 hover:bg-[#B85C38]/20 dark:hover:bg-[#D4A574]/20 px-3 py-1.5 rounded-full border border-[#B85C38]/20 dark:border-[#D4A574]/30 transition"
+                  >
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                    </svg>
+                    {s}
+                  </Link>
+                ))}
+              </div>
             </div>
           )}
 

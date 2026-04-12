@@ -48,7 +48,7 @@ export default function BookCard({ book }) {
             <span className="text-xs text-[#8B7355]/70 dark:text-[#8A7B6D]/70">{book.publishYear}</span>
           )}
           {book.categories?.length > 0 && (
-            <span className="text-xs text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-900/30 px-1.5 py-0.5 rounded">
+            <span className="text-xs text-[#B85C38] dark:text-[#D4A574] bg-[#B85C38]/10 dark:bg-[#D4A574]/10 px-1.5 py-0.5 rounded-full">
               {book.categories[0]}
             </span>
           )}
