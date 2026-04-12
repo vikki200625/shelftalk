@@ -4,49 +4,75 @@
 
 @layer base {
   :root {
-    --bg-primary: #f9fafb;
-    --bg-secondary: #ffffff;
-    --bg-tertiary: #f3f4f6;
-    --text-primary: #111827;
-    --text-secondary: #4b5563;
-    --text-tertiary: #9ca3af;
-    --border: #e5e7eb;
-    --accent: #4f46e5;
-    --accent-hover: #4338ca;
+    --primary: #00236f;
+    --primary-container: #1e3a8a;
+    --on-primary: #ffffff;
+    --on-primary-container: #90a8ff;
+    --secondary: #665f3d;
+    --secondary-container: #eae0b5;
+    --on-secondary: #ffffff;
+    --on-secondary-container: #6a6341;
+    --tertiary: #003210;
+    --tertiary-container: #004b1b;
+    --on-tertiary: #ffffff;
+    --surface: #f7f9ff;
+    --surface-dim: #d6dae1;
+    --surface-container-low: #f0f4fb;
+    --surface-container-high: #e4e8ef;
+    --surface-container: #eaeef5;
+    --on-surface: #171c21;
+    --on-surface-variant: #444651;
+    --outline: #757682;
+    --outline-variant: #c5c5d3;
+    --background: #f7f9ff;
+    --error: #ba1a1a;
   }
 
   .dark {
-    --bg-primary: #111827;
-    --bg-secondary: #1f2937;
-    --bg-tertiary: #374151;
-    --text-primary: #f9fafb;
-    --text-secondary: #d1d5db;
-    --text-tertiary: #6b7280;
-    --border: #374151;
-    --accent: #818cf8;
-    --accent-hover: #6366f1;
+    --primary: #b6c4ff;
+    --primary-container: #264191;
+    --on-primary: #00164e;
+    --on-primary-container: #264191;
+    --secondary: #d1c79d;
+    --secondary-container: #4d4727;
+    --on-secondary: #201c02;
+    --on-secondary-container: #d1c79d;
+    --tertiary: #6bde80;
+    --tertiary-container: #00531f;
+    --on-tertiary: #002108;
+    --surface: #1a1c1e;
+    --surface-dim: #131418;
+    --surface-container-low: #1e2125;
+    --surface-container-high: #282c32;
+    --surface-container: #24282e;
+    --on-surface: #e2e2e5;
+    --on-surface-variant: #c5c5c9;
+    --outline: #9094a1;
+    --outline-variant: #44464b;
+    --background: #1a1c1e;
+    --error: #ffb4ab;
   }
 
   body {
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    transition: background-color 0.2s, color 0.2s;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--surface);
+    color: var(--on-surface);
   }
 }
 
 @layer utilities {
-  @keyframes slide-in {
-    from {
-      opacity: 0;
-      transform: translateX(100%);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
+  .font-serif {
+    font-family: 'Newsreader', serif;
+  }
+  
+  .font-body {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  @keyframes drift-up {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
   }
 
-  .animate-slide-in {
-    animation: slide-in 0.3s ease-out;
-  }
+  .animate-drift { animation: drift-up 6s ease-in-out infinite; }
 }
