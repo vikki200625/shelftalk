@@ -1,130 +1,180 @@
-# ShelfTalk 📚
-
 <div align="center">
 
-![React](https://img.shields.io/badge/React-18-blue?logo=react)
-![Vite](https://img.shields.io/badge/Vite-5-purple?logo=vite)
-![Tailwind](https://img.shields.io/badge/Tailwind-3-cyan?logo=tailwind-css)
-![Supabase](https://img.shields.io/badge/Supabase-3-green?logo=supabase)
+```
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+  ░                                             ░
+  ░    📚  S H E L F T A L K               ░
+  ░    where books finally get a social life    ░
+  ░                                             ░
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+```
 
-**The app that judges your TBR pile so you don't have to**
+**Your TBR pile just got a glow-up.**
+
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![PWA](https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)](https://web.dev/progressive-web-apps/)
+
+[🚀 Live Demo](https://shelftalk-9g8sbd62z-vikki200625s-projects.vercel.app) · [✨ GitHub](https://github.com/vikki200625/shelftalk)
 
 </div>
 
 ---
 
-## Wait, what even is this?
+## 📖 What even is this?
 
-ShelfTalk is basically Goodreads had a baby with Tinder and that baby started a book club... with *personality*. It's your all-in-one book discovery, library tracking, and community platform built with React + Supabase + way too much coffee.
+You know that one friend who has read *everything*, remembers every plot twist, judges your taste (lovingly), and always has a recommendation ready at 2am?
 
-Think of it as your literary hype man. It'll help you find your next obsession, keep track of your reading chaos, and connect you with people who also have 47 books "currently reading."
+**ShelfTalk is that friend. But it never sleeps and doesn't steal your snacks.**
 
----
+It's a full-stack book social platform where you can track what you're reading, stalk your friends' shelves, join book clubs, get AI-powered recommendations, and finally find people who also cried at *that* chapter.
 
-## Features that actually matter
-
-| What it does | Why it's cool |
-|--------------|---------------|
-| 🔍 **Book Discovery** | Search millions of books via Google Books API. Find your next read without doomscrolling for 3 hours. |
-| 📖 **Personal Library** | Track reading progress, organize books into lists, set goals you definitely won't keep. Classic. |
-| ⭐ **Reviews** | Rate books, write thoughts, mark spoilers (we see you, subtle spoiler folks). |
-| 💬 **Discussions** | Start convos, reply to readers, cry over book endings together. |
-| 👥 **Social** | Follow friends, get recommendations, pretend you're a "book influencer." |
-| 👯 **Book Clubs** | Create or join clubs based on genre. Finally somewhere to talk about your fantasy obsessions. |
-| 🤖 **AI Recommendations** | Mood-based suggestions. "I want something that makes me feel things" → here's 47 options. |
-| 📊 **Dashboard** | Stats that prove you *did* read that one book in 2023. Goals that judge your reading habits. |
-| 🌙 **Dark Mode** | Because reading at 2am with a bright screen is a choice you shouldn't have to make. |
-| 📱 **PWA** | Install it on your phone like a real app. No more "I'll just open the website" excuses. |
+> *"I built this instead of finishing my reading list. The irony is not lost on me."*
+> — the developer, probably
 
 ---
 
-## The Tech Stack (for the nerds)
+## ✨ Features (a.k.a. reasons to never touch Goodreads again)
+
+### 📚 Your Personal Library
+- **Browse & Search** — Powered by Google Books API. No more "uhh it had a blue cover" Google searches.
+- **Reading Status Tracker** — *Want to Read / Reading / Completed / Dropped* (we don't judge the dropped ones. okay maybe a little.)
+- **Book Lists** — Make curated collections. "Books I'll definitely read someday" is a valid list name.
+- **Reading Goals** — Set yearly targets. Watch yourself fail in beautiful, animated progress bars.
+- **Notes & Highlights** — Annotate books like the intellectual you aspire to be.
+
+### 👯 Social (for the extroverted bookworm)
+- **Friends System** — Search users, send friend requests, follow people with better taste than you.
+- **Real-time Chat** — A live chatroom because group chats were getting too civilized.
+- **Book Clubs** — Create genre-based clubs. Fantasy dragons. Cozy mysteries. Whatever your vibe is.
+- **Discussions** — Argue about endings in a structured, civilized manner. (Spoiler tags included. You're welcome.)
+
+### 🤖 The Smart Stuff
+- **AI Recommendations** — Tell it your mood and it'll find your next obsession. Powered by actual AI, not a random number generator.
+- **Dashboard & Stats** — Reading streaks, achievements, yearly progress. Gamification, but make it literary.
+- **Dark Mode** — For the night owls reading at 3am claiming "just one more chapter."
+
+### ⚡ The Nerdy Bits
+- **PWA** — Install it on your phone. It lives in your home screen now. Cozy.
+- **Fully Responsive** — Looks gorgeous on everything from a smartwatch to a cinema display. (okay maybe not a smartwatch)
+- **Glassmorphism UI** — It's pretty. Like, embarrassingly pretty.
+
+---
+
+## 🛠️ Tech Stack
 
 ```
-┌─────────────────────────────────────────────────────┐
-│  Frontend:  React • Vite • Tailwind • React Router │
-├─────────────────────────────────────────────────────┤
-│  Backend:   Supabase (PostgreSQL, Auth, Realtime)  │
-├─────────────────────────────────────────────────────┤
-│  APIs:      Google Books API                       │
-└─────────────────────────────────────────────────────┘
+Frontend    →  React + Vite (fast. like, really fast.)
+Styling     →  Tailwind CSS + Material Design 3 (pretty fast too)
+Backend     →  Supabase (Postgres + Auth + Realtime + Storage)
+Books API   →  Google Books API (Google knows every book. of course.)
+AI          →  Because recommending "just read more" wasn't enough
+Deployment  →  Vercel (it just works™)
 ```
 
 ---
 
-## How to run this bad boy
+## 🚀 Running it Locally
+
+*(For the brave souls who want to poke around)*
+
+**Prerequisites:** Node.js 18+, a Supabase account, and the will to live.
 
 ```bash
-# Step 1: Get the code
+# 1. Clone it
 git clone https://github.com/vikki200625/shelftalk.git
-
-# Step 2: Go there
 cd shelftalk
 
-# Step 3: Install stuff (finally something that works on the first try)
+# 2. Install stuff
 npm install
 
-# Step 4: Set up your secrets
+# 3. Set up your secrets
 cp .env.example .env
-# Fill in: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, VITE_GOOGLE_BOOKS_API_KEY
+# Fill in your Supabase URL, anon key, and Google Books API key
+# (yes you need to make a .env file. no I won't do it for you.)
 
-# Step 5: Fire it up
+# 4. Set up the database
+# Run migration_00_fix_rls.sql first (if you get white screen)
+# Then run migrations 01-07 in order
+
+# 5. Run it
 npm run dev
 ```
 
+Open `http://localhost:5173` and behold. ✨
+
 ---
 
-## Project Structure (so you know where to break things)
+## 🗄️ Database Setup
 
+Head to your Supabase SQL Editor and run the migration files **in order**:
+
+| File | What it does |
+|------|-------------|
+| `migration_00_fix_rls.sql` | Fixes RLS policies (run first if white screen) |
+| `migration_01_reading_goals.sql` | Reading goals |
+| `migration_02_user_follows.sql` | Follow system |
+| `migration_03_book_lists.sql` | Book lists/collections |
+| `migration_04_chat.sql` | Chat messages |
+| `migration_05_book_clubs.sql` | Book clubs & discussions |
+| `migration_06_analytics.sql` | Reading streaks, achievements |
+| `migration_07_notes.sql` | Notes & highlights |
+
+---
+
+## 🌍 Environment Variables
+
+Create a `.env` file in the root:
+
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_GOOGLE_BOOKS_API_KEY=your_google_books_api_key
 ```
-shelftalk/
-├── src/
-│   ├── components/    # UI pieces that actually look decent
-│   ├── contexts/      # Auth, Theme, Toast (the invisible heroes)
-│   ├── lib/           # API connections
-│   └── pages/         # All the routes
-├── migration_*.sql    # Database setups (the boring but necessary stuff)
-├── .env               # Your secrets (don't share these)
-└── package.json       # The magic that makes it run
-```
 
 ---
 
-## Environment Variables (don't skip this)
+## 🤝 Contributing
 
-| Variable | What it is |
-|----------|-----------|
-| `VITE_SUPABASE_URL` | Your Supabase project URL |
-| `VITE_SUPABASE_ANON_KEY` | Supabase anon key |
-| `VITE_GOOGLE_BOOKS_API_KEY` | Google Books API key |
+Found a bug? Have a feature idea? Think the color scheme could be better?
 
----
+1. Fork it
+2. Create a branch (`git checkout -b feature/actually-good-idea`)
+3. Commit your changes (`git commit -m 'Add: that thing you wanted'`)
+4. Push (`git push origin feature/actually-good-idea`)
+5. Open a PR and describe what you did like I'm five
 
-## Why did I build this?
-
-1. Goodreads got boring and felt like a digital library from 2005
-2. I wanted to prove I could build a full-stack app
-3. My TBR pile was getting out of hand
-4. I like making things that don't look like they were generated by AI
+PRs are welcome. Unsolicited redesigns of the entire frontend are... also welcome, honestly.
 
 ---
 
-## What's next?
+## 🐛 Known Issues
 
-- More features (because apparently I can't stop)
-- Better recommendations (the AI is trying its best)
-- Maybe... mobile app? (don't hold your breath)
+- The TBR pile grows faster than the "Completed" list. *This is a feature.*
+- AI recommendations are dangerously good. Side effects include: buying 7 new books, crying, and missing sleep.
+- Real-time chat may cause you to make actual friends. We accept no liability.
 
 ---
 
-## Let's be friends
+## 📜 License
 
-If you use this, cool! If you have questions, open an issue. If you want to contribute... bless your heart.
+MIT — meaning yes, you can use this, and no, you don't have to credit me.
+But like... it would be nice. Just saying. 👉👈
 
-Made with ☕, insomnia, and far too many books.
+---
 
 <div align="center">
 
-**ShelfTalk: Your books, your rules, your problem when you buy 12 more.**
+**Made with 📚 + ☕ + one too many late nights**
+
+*If this project made you smile, go read a book.*
+*If this project frustrated you, also go read a book.*
+*Books fix everything.*
+
+---
+
+⭐ **Star this repo if you believe physical books and e-books can coexist peacefully** ⭐
 
 </div>
