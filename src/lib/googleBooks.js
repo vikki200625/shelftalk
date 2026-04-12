@@ -5,6 +5,7 @@ export async function searchBooks(query, page = 1, filters = {}) {
   const startIndex = (page - 1) * 20
 
   let q = query || ''
+  let langFilter = filters.language || ''
 
   if (filters.subject) {
     q = q ? `${q}+subject:${filters.subject}` : `subject:${filters.subject}`
@@ -12,6 +13,10 @@ export async function searchBooks(query, page = 1, filters = {}) {
 
   if (filters.author) {
     q = q ? `${q}+inauthor:${filters.author}` : `inauthor:${filters.author}`
+  }
+
+  if (!q) {
+    q = 'book'
   }
 
   const params = new URLSearchParams({
@@ -23,8 +28,8 @@ export async function searchBooks(query, page = 1, filters = {}) {
     key: API_KEY,
   })
 
-  if (filters.language) {
-    params.append('langRestrict', filters.language)
+  if (langFilter) {
+    params.append('langRestrict', langFilter)
   }
 
   const res = await fetch(`${BASE_URL}/volumes?${params}`)

@@ -67,32 +67,47 @@ export default function Browse() {
   const [authorBooks, setAuthorBooks] = useState([])
   const [loadingAuthor, setLoadingAuthor] = useState(false)
 
+  const [language, setLanguage] = useState('')
+
   useEffect(() => {
     if (!activeCategory) return
     setLoading(true)
-    searchBySubject(activeCategory.query, 1)
+    searchBySubject(activeCategory.query, 1, { language })
       .then(data => setCategoryBooks(data.books))
       .catch(() => setCategoryBooks([]))
       .finally(() => setLoading(false))
-  }, [activeCategory])
+  }, [activeCategory, language])
 
   useEffect(() => {
     if (!activeAuthor) return
     setLoadingAuthor(true)
-    searchByAuthor(activeAuthor.name, 1)
+    searchByAuthor(activeAuthor.name, 1, { language })
       .then(data => setAuthorBooks(data.books))
       .catch(() => setAuthorBooks([]))
       .finally(() => setLoadingAuthor(false))
-  }, [activeAuthor])
+  }, [activeAuthor, language])
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Browse Books</h1>
-      <p className="text-gray-500 dark:text-gray-400 mb-8">Explore books by genre or author</p>
+    <div className="w-full px-6 py-8">
+      <div className="flex justify-between items-start mb-8">
+        <div>
+          <h1 className="text-3xl font-serif italic text-blue-900 dark:text-blue-100 mb-2">Browse Books</h1>
+          <p className="text-stone-500 dark:text-stone-400">Explore books by genre or author</p>
+        </div>
+        <select
+          value={language}
+          onChange={(e) => setLanguage(e.target.value)}
+          className="px-4 py-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-sm"
+        >
+          {LANGUAGES.map((lang) => (
+            <option key={lang.name} value={lang.code}>{lang.name}</option>
+          ))}
+        </select>
+      </div>
 
       {/* Categories Section */}
       <div className="mb-12">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Categories</h2>
+        <h2 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-4">Categories</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {CATEGORIES.map((cat) => (
             <button

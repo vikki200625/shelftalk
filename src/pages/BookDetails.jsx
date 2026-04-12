@@ -374,27 +374,9 @@ export default function BookDetails() {
 
   if (!book) return null
 
-  const GENRE_TAGS = {
-    'sci-fi': 'Sci-Fi',
-    'science fiction': 'Sci-Fi',
-    'fantasy': 'Fantasy',
-    'mystery': 'Mystery',
-    'thriller': 'Thriller',
-    'romance': 'Romance',
-    'horror': 'Horror',
-    'biography': 'Biography',
-    'history': 'History',
-    'self-help': 'Self-Help',
-    'non-fiction': 'Non-Fiction',
-    'young adult': 'Young Adult',
-  }
-  
-  const bookText = `${book.title} ${book.authors.join(' ')}`.toLowerCase()
-  const foundTags = new Set()
-  Object.entries(GENRE_TAGS).forEach(([keyword, label]) => {
-    if (bookText.includes(keyword)) foundTags.add(label)
-  })
-  const tags = Array.from(foundTags).slice(0, 6)
+  const CATEGORIES = book.categories || []
+  const primaryCategory = CATEGORIES[0] || null
+  const tags = primaryCategory ? [primaryCategory] : []
   
   const authorsText = book.authors.join(', ') || 'Unknown Author'
   const amazonSearchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(book.title + ' ' + book.authors.join(' '))}&i=stripbooks`

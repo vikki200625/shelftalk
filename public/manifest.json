@@ -1,0 +1,43 @@
+{
+  "name": "ShelfTalk - Find Your Next Great Read",
+  "short_name": "ShelfTalk",
+  "description": "Discover millions of books, track your reading, and connect with fellow book lovers",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FDF6EC",
+  "theme_color": "#00236f",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": "books, lifestyle, social",
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Browse Books",
+      "short_name": "Browse",
+      "description": "Explore books by category",
+      "url": "/browse",
+      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "My Library",
+      "short_name": "Library",
+      "description": "View your book collection",
+      "url": "/library",
+      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+    },
+    {
+      "name": "Dashboard",
+      "short_name": "Stats",
+      "description": "View your reading stats",
+      "url": "/dashboard",
+      "icons": [{ "src": "/favicon.svg", "sizes": "96x96" }]
+    }
+  ]
+}

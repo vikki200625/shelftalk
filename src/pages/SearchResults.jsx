@@ -149,9 +149,9 @@ export default function SearchResults() {
   const totalPages = Math.ceil(results.total / 20)
 
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+    <div className="w-full px-6 py-8">
       {/* Search Bar */}
-      <form onSubmit={handleSearch} className="mb-6">
+      <form onSubmit={handleSearch} className="mb-6 max-w-2xl">
         <div className="relative max-w-2xl">
           <input
             type="text"
@@ -221,11 +221,11 @@ export default function SearchResults() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Language</label>
+            <label className="block text-xs font-medium text-stone-500 dark:text-stone-400 mb-1">Language</label>
             <select
               value={language}
               onChange={(e) => handleFilterChange('language', e.target.value)}
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+              className="w-full px-3 py-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-sm focus:ring-2 focus:ring-blue-700/20 outline-none"
             >
               {LANGUAGES.map((lang) => (
                 <option key={lang.name} value={lang.code}>{lang.name}</option>

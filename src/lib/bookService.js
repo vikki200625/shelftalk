@@ -12,12 +12,12 @@ export async function searchBooks(query, page = 1, filters = {}) {
   return openLibrary.searchBooks(query, page)
 }
 
-export async function searchBySubject(subject, page = 1) {
-  return searchBooks('', page, { subject })
+export async function searchBySubject(subject, page = 1, filters = {}) {
+  return searchBooks('', page, { subject, ...filters })
 }
 
-export async function searchByAuthor(author, page = 1) {
-  return searchBooks('', page, { author })
+export async function searchByAuthor(author, page = 1, filters = {}) {
+  return searchBooks('', page, { author, ...filters })
 }
 
 export async function getBookDetails(id) {

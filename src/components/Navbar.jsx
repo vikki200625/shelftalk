@@ -14,6 +14,7 @@ export default function Navbar() {
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
   const [showSearch, setShowSearch] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const searchRef = useRef(null)
 
   useEffect(() => {
@@ -50,8 +51,8 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-md docked">
-        <div className="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+      <nav className="sticky top-0 z-50 bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-md docked full-width">
+        <div className="flex justify-between items-center w-full px-6 py-4">
           <div className="flex items-center gap-8">
             <Link to="/" className="text-2xl font-serif italic text-blue-900 dark:text-blue-100">
               ShelfTalk
@@ -81,8 +82,10 @@ export default function Navbar() {
             {user ? (
               <div className="hidden md:flex gap-6 items-center">
                 {[
+                  { path: '/dashboard', label: 'Dashboard' },
                   { path: '/library', label: 'Library' },
                   { path: '/lists', label: 'Lists' },
+                  { path: '/friends', label: 'Friends' },
                   { path: '/chat', label: 'Chat' },
                 ].map((link) => (
                   <Link
@@ -118,6 +121,15 @@ export default function Navbar() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                 </svg>
               )}
+            </button>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2 text-stone-500 dark:text-stone-400"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
             </button>
 
             {user ? (
@@ -171,6 +183,43 @@ export default function Navbar() {
             </form>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t border-stone-200 dark:border-stone-700">
+            <div className="py-2 space-y-1">
+              {user && [
+                { path: '/dashboard', label: 'Dashboard' },
+                { path: '/library', label: 'Library' },
+                { path: '/lists', label: 'Lists' },
+                { path: '/friends', label: 'Friends' },
+                { path: '/chat', label: 'Chat' },
+              ].map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-6 py-2 text-sm text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              {[
+                { path: '/browse', label: 'Browse' },
+                { path: '/search', label: 'Search' },
+              ].map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-6 py-2 text-sm text-stone-600 dark:text-stone-300 hover:bg-stone-100 dark:hover:bg-stone-800"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </nav>
     </>
   )
