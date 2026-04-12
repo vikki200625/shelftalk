@@ -40,9 +40,18 @@ CREATE TABLE IF NOT EXISTS public.club_discussion_replies (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Club discussion replies (for earlier migration)
+CREATE TABLE IF NOT EXISTS public.club_discussion_replies (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  discussion_id uuid REFERENCES public.club_discussions(id) ON DELETE CASCADE NOT NULL,
+  user_id uuid REFERENCES auth.users(id) ON DELETE CASCADE NOT NULL,
+  body text NOT NULL,
+  created_at timestamptz DEFAULT NOW()
+);
+
 -- Indexes
 CREATE INDEX IF NOT EXISTS idx_club_members ON public.book_club_members(club_id, user_id);
-CREATE INDEX IF NOT EXISTS idx_club_discussions ON public.book_club_discussions(club_id);
+CREATE INDEX IF NOT EXISTS idx_club_discussions ON public.club_discussions(club_id);
 
 -- Enable RLS
 ALTER TABLE public.book_clubs ENABLE ROW LEVEL SECURITY;

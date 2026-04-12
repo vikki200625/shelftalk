@@ -67,7 +67,10 @@ export default function BookClubs() {
       .single()
 
     if (error) {
-      showToast('Error creating club', 'error')
+      console.error('Club error:', error)
+      showToast(error.message || 'Error creating club', 'error')
+      setCreating(false)
+      return
     } else {
       await supabase
         .from('book_club_members')
