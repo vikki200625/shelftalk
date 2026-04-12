@@ -4,12 +4,13 @@ import { searchBooks } from '../lib/bookService'
 import BookCard from '../components/BookCard'
 import BookCardSkeleton from '../components/BookCardSkeleton'
 
-const CATEGORIES = [
-  { name: 'All Categories', query: '' },
+const TAGS = [
+  { name: 'All', query: '' },
   { name: 'Fiction', query: 'fiction' },
-  { name: 'Mystery & Thriller', query: 'mystery' },
+  { name: 'Mystery', query: 'mystery' },
+  { name: 'Thriller', query: 'thriller' },
   { name: 'Romance', query: 'romance' },
-  { name: 'Science Fiction', query: 'science fiction' },
+  { name: 'Sci-Fi', query: 'science fiction' },
   { name: 'Fantasy', query: 'fantasy' },
   { name: 'Horror', query: 'horror' },
   { name: 'Biography', query: 'biography' },
@@ -18,14 +19,26 @@ const CATEGORIES = [
   { name: 'History', query: 'history' },
   { name: 'Science', query: 'science' },
   { name: 'Young Adult', query: 'young adult' },
-  { name: "Children's Books", query: 'juvenile fiction' },
+  { name: "Children", query: 'juvenile fiction' },
   { name: 'Poetry', query: 'poetry' },
   { name: 'Comics', query: 'comics' },
   { name: 'Cooking', query: 'cooking' },
   { name: 'Travel', query: 'travel' },
   { name: 'Psychology', query: 'psychology' },
-  { name: 'Technology', query: 'computers' },
+  { name: 'Religion', query: 'religion' },
+  { name: 'Philosophy', query: 'philosophy' },
+  { name: 'Sports', query: 'sports' },
+  { name: 'Art', query: 'art' },
+  { name: 'Music', query: 'music' },
+  { name: 'Health', query: 'health' },
+  { name: 'Politics', query: 'political science' },
+  { name: 'Law', query: 'law' },
+  { name: 'Education', query: 'education' },
+  { name: 'Nature', query: 'nature' },
+  { name: 'Gardening', query: 'gardening' },
 ]
+
+const CATEGORIES = TAGS
 
 const LANGUAGES = [
   { code: '', name: 'All Languages' },

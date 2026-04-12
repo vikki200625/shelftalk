@@ -424,11 +424,16 @@ export default function BookDetails() {
           )}
 
           {tags.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-3 mb-4">
+            <div className="flex flex-wrap gap-2 mt-3 mb-4">
+              <span className="text-xs text-gray-500 dark:text-gray-400 mr-1">Tags:</span>
               {tags.slice(0, 5).map((s, i) => (
-                <span key={i} className="text-xs bg-purple-50 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-2 py-1 rounded-xl">
+                <Link
+                  key={i}
+                  to={`/search?q=&subject=${encodeURIComponent(s)}`}
+                  className="text-xs bg-purple-50 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-2 py-1 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/70 transition"
+                >
                   {s}
-                </span>
+                </Link>
               ))}
             </div>
           )}
