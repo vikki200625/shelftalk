@@ -54,24 +54,28 @@ export default function BookClubs() {
     e.preventDefault()
     setCreating(true)
 
+    console.log('Creating club with:', { name: newClub.name, description: newClub.description, cover_type: newClub.cover_type, created_by: user.id })
+
     const { data, error } = await supabase
       .from('book_clubs')
       .insert({
         name: newClub.name,
-        description: newClub.description,
+        description: newClub.description || null,
         cover_type: newClub.cover_type,
-        created_by: user.id,
-        current_book: null
+        created_by: user.id
       })
       .select()
       .single()
 
     if (error) {
       console.error('Club error:', error)
+      console.error('Error details:', JSON.stringify(error))
       showToast(error.message || 'Error creating club', 'error')
       setCreating(false)
       return
-    } else {
+    }
+
+    console.log('Club created:', data) else {
       await supabase
         .from('book_club_members')
         .insert({
