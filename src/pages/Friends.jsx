@@ -36,14 +36,14 @@ export default function Friends() {
   }
 
   async function fetchRequests() {
-    const { data } = await supabase
-      .from('friend_requests')
-      .select(`
-        *,
-        sender:profiles(id, display_name, avatar_url)
-      `)
+    const { data, error } = await supabase
+      .from('friend_requests_with_profiles')
+      .select('*')
       .eq('receiver_id', user.id)
       .eq('status', 'pending')
+
+    console.log('requests data:', data)
+    console.log('requests error:', error)
 
     setRequests(data || [])
   }
@@ -65,13 +65,19 @@ export default function Friends() {
   }
 
   async function sendFriendRequest(profileId) {
-    await supabase
+    const { error } = await supabase
       .from('friend_requests')
       .insert({
         sender_id: user.id,
         receiver_id: profileId,
         status: 'pending'
       })
+
+    if (error) {
+      console.error('Error sending friend request:', error)
+      showToast('Failed to send request: ' + error.message, 'error')
+      return
+    }
 
     showToast('Friend request sent!', 'success')
     setSearchResults(prev => prev.filter(p => p.id !== profileId))
@@ -177,10 +183,10 @@ export default function Friends() {
               <div key={req.id} className="flex items-center justify-between p-3 bg-stone-50 dark:bg-stone-700 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold">
-                    {(req.sender?.display_name || '?')[0].toUpperCase()}
+                    {(req.sender_display_name || '?')[0].toUpperCase()}
                   </div>
                   <span className="font-medium text-stone-900 dark:text-stone-100">
-                    {req.sender?.display_name || 'Anonymous'}
+                    {req.sender_display_name || 'Anonymous'}
                   </span>
                 </div>
                 <div className="flex gap-2">
