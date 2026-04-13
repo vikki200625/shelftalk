@@ -4,7 +4,6 @@ import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
 import supabase from '../lib/supabase'
 import ReadingGoal from '../components/ReadingGoal'
-import ProgressBar from '../components/ProgressBar'
 import LibraryItemSkeleton from '../components/LibraryItemSkeleton'
 
 const STATUS_TABS = [
@@ -30,9 +29,6 @@ export default function MyLibrary() {
   const [activeTab, setActiveTab] = useState('all')
   const [editingNotes, setEditingNotes] = useState(null)
   const [notesText, setNotesText] = useState('')
-  const [editingProgress, setEditingProgress] = useState(null)
-  const [progressPage, setProgressPage] = useState('')
-  const [saving, setSaving] = useState(false)
 
   useEffect(() => {
     if (!user) return
@@ -100,46 +96,9 @@ export default function MyLibrary() {
     fetchLibrary()
   }
 
-  async function handleSaveProgress(item) {
-    const page = parseInt(progressPage)
-    if (isNaN(page) || page < 0) return
-    setSaving(true)
-
-    const totalPages = item.books.page_count
-    const updates = {
-      current_page: page,
-      updated_at: new Date().toISOString(),
-    }
-
-    if (totalPages && page >= totalPages) {
-      updates.status = 'completed'
-      updates.finished_at = new Date().toISOString()
-    }
-
-    await supabase
-      .from('user_library')
-      .update(updates)
-      .eq('user_id', user.id)
-      .eq('book_id', item.book_id)
-
-    setEditingProgress(null)
-    setSaving(false)
-    if (totalPages && page >= totalPages) {
-      showToast('Congratulations! Book completed!', 'success')
-    } else {
-      showToast('Progress updated!', 'success')
-    }
-    fetchLibrary()
-  }
-
   function startEditingNotes(item) {
     setEditingNotes(item.id)
     setNotesText(item.notes || '')
-  }
-
-  function startEditingProgress(item) {
-    setEditingProgress(item.id)
-    setProgressPage((item.current_page || 0).toString())
   }
 
   if (!authLoading && !user) {
@@ -229,28 +188,6 @@ export default function MyLibrary() {
                   </Link>
                   <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{item.books.author || 'Unknown Author'}</p>
 
-                  {/* Reading Progress */}
-                  {item.status === 'reading' && item.books.page_count && editingProgress !== item.id && (
-                    <div className="mt-2 max-w-xs">
-                      <ProgressBar
-                        current={item.current_page || 0}
-                        total={item.books.page_count}
-                      />
-                      <button
-                        onClick={() => startEditingProgress(item)}
-                        className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline mt-1"
-                      >
-                        Update Progress
-                      </button>
-                    </div>
-                  )}
-
-                  {item.status === 'reading' && !item.books.page_count && (
-                    <div className="mt-2">
-                      <p className="text-xs text-gray-400 dark:text-gray-500">Page count unavailable</p>
-                    </div>
-                  )}
-
                   <div className="flex items-center gap-3 mt-3 flex-wrap">
                     <select
                       value={item.status}
@@ -284,41 +221,6 @@ export default function MyLibrary() {
                   )}
                 </div>
               </div>
-
-              {/* Progress Editor */}
-              {editingProgress === item.id && (
-                <div className="px-4 pb-4 border-t border-gray-100 dark:border-gray-700 pt-3">
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Update reading progress:</p>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="number"
-                      value={progressPage}
-                      onChange={(e) => setProgressPage(e.target.value)}
-                      min="0"
-                      max={item.books.page_count || 99999}
-                      className="w-20 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
-                    />
-                    {item.books.page_count && (
-                      <span className="text-sm text-gray-500 dark:text-gray-400">/ {item.books.page_count} pages</span>
-                    )}
-                  </div>
-                  <div className="flex gap-2 mt-3">
-                    <button
-                      onClick={() => handleSaveProgress(item)}
-                      disabled={saving}
-                      className="bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-indigo-700 transition disabled:opacity-50"
-                    >
-                      {saving ? 'Saving...' : 'Save Progress'}
-                    </button>
-                    <button
-                      onClick={() => setEditingProgress(null)}
-                      className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              )}
 
               {/* Notes Editor */}
               {editingNotes === item.id && (

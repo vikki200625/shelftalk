@@ -7,9 +7,6 @@ const ACHIEVEMENTS_LIST = [
   { name: 'Bookworm', icon: '📚', desc: 'Complete 10 books', requirement: 10, type: 'books' },
   { name: 'Bibliophile', icon: '🏛️', desc: 'Complete 50 books', requirement: 50, type: 'books' },
   { name: 'Book Master', icon: '👑', desc: 'Complete 100 books', requirement: 100, type: 'books' },
-  { name: 'Page Turner', icon: '📄', desc: 'Read 100 pages', requirement: 100, type: 'pages' },
-  { name: 'Chapter Champion', icon: '📑', desc: 'Read 1000 pages', requirement: 1000, type: 'pages' },
-  { name: 'Page Master', icon: '📖', desc: 'Read 10000 pages', requirement: 10000, type: 'pages' },
   { name: 'Streak Starter', icon: '🔥', desc: '3 day reading streak', requirement: 3, type: 'streak' },
   { name: 'On Fire', icon: '🔥🔥', desc: '7 day reading streak', requirement: 7, type: 'streak' },
   { name: 'Unstoppable', icon: '🔥🔥🔥', desc: '30 day reading streak', requirement: 30, type: 'streak' },
@@ -25,7 +22,6 @@ export default function Achievements() {
   const [earnedIds, setEarnedIds] = useState([])
   const [stats, setStats] = useState({
     booksCompleted: 0,
-    pagesRead: 0,
     currentStreak: 0,
     reviewsCount: 0,
     discussionsCount: 0,
@@ -43,7 +39,6 @@ export default function Achievements() {
     
     const [
       libraryRes,
-      pagesRes,
       streakRes,
       reviewsRes,
       discussionsRes,
@@ -52,7 +47,6 @@ export default function Achievements() {
       earnedRes
     ] = await Promise.all([
       supabase.from('user_library').select('id').eq('user_id', user.id).eq('status', 'completed'),
-      supabase.from('user_library').select('pages_read').eq('user_id', user.id),
       supabase.from('reading_streaks').select('current_streak').eq('user_id', user.id).single(),
       supabase.from('reviews').select('id', { count: 'exact' }).eq('user_id', user.id),
       supabase.from('discussions').select('id', { count: 'exact' }).eq('user_id', user.id),
@@ -61,12 +55,10 @@ export default function Achievements() {
       supabase.from('user_achievements').select('achievement_id').eq('user_id', user.id),
     ])
 
-    const totalPages = pagesRes.data?.reduce((sum, b) => sum + (b.pages_read || 0), 0) || 0
     const streak = streakRes.data
 
     setStats({
       booksCompleted: libraryRes.data?.length || 0,
-      pagesRead: totalPages,
       currentStreak: streak?.current_streak || 0,
       reviewsCount: reviewsRes.count || 0,
       discussionsCount: discussionsRes.count || 0,
@@ -81,7 +73,6 @@ export default function Achievements() {
   function getProgress(achievement) {
     switch (achievement.type) {
       case 'books': return Math.min((stats.booksCompleted / achievement.requirement) * 100, 100)
-      case 'pages': return Math.min((stats.pagesRead / achievement.requirement) * 100, 100)
       case 'streak': return Math.min((stats.currentStreak / achievement.requirement) * 100, 100)
       case 'reviews': return Math.min((stats.reviewsCount / achievement.requirement) * 100, 100)
       case 'discussions': return Math.min((stats.discussionsCount / achievement.requirement) * 100, 100)
@@ -127,9 +118,9 @@ export default function Achievements() {
       {/* Stats Summary */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <StatBox icon="📚" label="Books" value={stats.booksCompleted} />
-        <StatBox icon="📖" label="Pages" value={stats.pagesRead.toLocaleString()} />
         <StatBox icon="🔥" label="Streak" value={`${stats.currentStreak} days`} />
         <StatBox icon="✍️" label="Reviews" value={stats.reviewsCount} />
+        <StatBox icon="💬" label="Discussions" value={stats.discussionsCount} />
       </div>
 
       {/* Achievements Grid */}

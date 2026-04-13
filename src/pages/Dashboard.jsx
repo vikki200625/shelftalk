@@ -4,12 +4,12 @@ import supabase from '../lib/supabase'
 import { Link } from 'react-router-dom'
 
 const ACHIEVEMENTS = [
-  { name: 'First Book', icon: '📖', desc: 'Completed your first book' },
-  { name: 'Bookworm', icon: '📚', desc: 'Completed 10 books' },
-  { name: 'Bibliophile', icon: '🏛️', desc: 'Completed 50 books' },
-  { name: 'Page Turner', icon: '📄', desc: 'Read 100 pages' },
-  { name: 'Streak Starter', icon: '🔥', desc: '3 day streak' },
-  { name: 'On Fire', icon: '🔥', desc: '7 day streak' },
+  { name: 'First Book', icon: '📖', desc: 'Complete your first book', requirement: 1, type: 'books' },
+  { name: 'Bookworm', icon: '📚', desc: 'Complete 10 books', requirement: 10, type: 'books' },
+  { name: 'Bibliophile', icon: '🏛️', desc: 'Complete 50 books', requirement: 50, type: 'books' },
+  { name: 'Streak Starter', icon: '🔥', desc: '3 day reading streak', requirement: 3, type: 'streak' },
+  { name: 'On Fire', icon: '🔥🔥', desc: '7 day reading streak', requirement: 7, type: 'streak' },
+  { name: 'Unstoppable', icon: '🔥🔥🔥', desc: '30 day reading streak', requirement: 30, type: 'streak' },
 ]
 
 export default function Dashboard() {
@@ -17,7 +17,6 @@ export default function Dashboard() {
   const [stats, setStats] = useState({
     totalBooks: 0,
     completedThisYear: 0,
-    pagesRead: 0,
     currentStreak: 0,
     longestStreak: 0,
     reviews: 0,
@@ -37,14 +36,12 @@ export default function Dashboard() {
 
     const [
       libraryRes,
-      pagesRes,
       streakRes,
       reviewsRes,
       discussionsRes,
       activityRes,
     ] = await Promise.all([
       supabase.from('user_library').select('id, status').eq('user_id', user.id),
-      supabase.from('user_library').select('pages_read').eq('user_id', user.id),
       supabase.from('reading_streaks').select('*').eq('user_id', user.id).maybeSingle(),
       supabase.from('reviews').select('id', { count: 'exact' }).eq('user_id', user.id),
       supabase.from('discussions').select('id', { count: 'exact' }).eq('user_id', user.id),
@@ -56,13 +53,11 @@ export default function Dashboard() {
     ])
 
     const library = libraryRes.data || []
-    const totalPages = (pagesRes.data || []).reduce((sum, b) => sum + (b.pages_read || 0), 0)
     const streak = streakRes.data
 
     setStats({
       totalBooks: library.length,
       completedThisYear: library.filter(b => b.status === 'completed').length,
-      pagesRead: totalPages ?? 0,
       currentStreak: streak?.current_streak || 0,
       longestStreak: streak?.longest_streak || 0,
       reviews: reviewsRes.count || 0,
@@ -99,7 +94,7 @@ export default function Dashboard() {
       <p className="text-stone-500 dark:text-stone-400 mb-8">Track your literary journey</p>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         <StatCard
           icon="📚"
           label="Total Books"
@@ -109,11 +104,6 @@ export default function Dashboard() {
           icon="✅"
           label="Completed This Year"
           value={stats.completedThisYear}
-        />
-        <StatCard
-          icon="📖"
-          label="Pages Read"
-          value={(stats.pagesRead || 0).toLocaleString()}
         />
         <StatCard
           icon="🔥"
@@ -214,11 +204,10 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-8">
         <QuickStat label="Reviews" value={stats.reviews} />
         <QuickStat label="Discussions" value={stats.discussions} />
         <QuickStat label="Longest Streak" value={`${stats.longestStreak} days`} />
-        <QuickStat label="Reading Level" value={getReadingLevel(stats.completedThisYear)} />
       </div>
     </div>
   )
@@ -241,13 +230,4 @@ function QuickStat({ label, value }) {
       <div className="text-sm text-stone-500">{label}</div>
     </div>
   )
-}
-
-function getReadingLevel(books) {
-  if (books >= 100) return '📚 Master'
-  if (books >= 50) return '🏛️ Expert'
-  if (books >= 20) return '📖 Avid Reader'
-  if (books >= 10) return '📕 Regular'
-  if (books >= 5) return '📗 Growing'
-  return '📙 Beginner'
 }
