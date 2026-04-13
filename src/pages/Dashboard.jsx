@@ -34,45 +34,62 @@ export default function Dashboard() {
 
   async function fetchDashboardData() {
     setLoading(true)
-    
+
     const [
       libraryRes,
-      yearlyRes,
       pagesRes,
       streakRes,
       reviewsRes,
       discussionsRes,
       activityRes,
     ] = await Promise.all([
-      supabase.from('user_library').select('id, status, pages_read').eq('user_id', user.id),
-      supabase.from('user_library').select('id').eq('user_id', user.id).eq('status', 'completed'),
+      supabase.from('user_library').select('id, status').eq('user_id', user.id),
       supabase.from('user_library').select('pages_read').eq('user_id', user.id),
-      supabase.from('reading_streaks').select('*').eq('user_id', user.id).single(),
+      supabase.from('reading_streaks').select('*').eq('user_id', user.id).maybeSingle(),
       supabase.from('reviews').select('id', { count: 'exact' }).eq('user_id', user.id),
       supabase.from('discussions').select('id', { count: 'exact' }).eq('user_id', user.id),
-      supabase.from('user_library').select('*, books(*)').eq('user_id', user.id).order('updated_at', { ascending: false }).limit(5),
+      supabase.from('user_library')
+        .select('*, books(*)')
+        .eq('user_id', user.id)
+        .order('updated_at', { ascending: false })
+        .limit(5),
     ])
 
     const library = libraryRes.data || []
-    const totalPages = pagesRes.data?.reduce((sum, b) => sum + (b.pages_read || 0), 0)
+    const totalPages = (pagesRes.data || []).reduce((sum, b) => sum + (b.pages_read || 0), 0)
     const streak = streakRes.data
-    const activity = activityRes.data || []
 
     setStats({
       totalBooks: library.length,
       completedThisYear: library.filter(b => b.status === 'completed').length,
-      pagesRead: totalPages,
+      pagesRead: totalPages ?? 0,
       currentStreak: streak?.current_streak || 0,
       longestStreak: streak?.longest_streak || 0,
       reviews: reviewsRes.count || 0,
       discussions: discussionsRes.count || 0,
     })
 
-    setRecentActivity(activity)
+    setRecentActivity(activityRes.data || [])
     setLoading(false)
   }
 
   const progressPercent = Math.min((stats.completedThisYear / yearlyGoal) * 100, 100)
+
+  if (loading) {
+    return (
+      <div className="w-full px-6 py-8 max-w-6xl mx-auto">
+        <div className="animate-pulse space-y-4">
+          <div className="h-8 bg-stone-200 dark:bg-stone-700 rounded w-64" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-24 bg-stone-200 dark:bg-stone-700 rounded-xl" />
+            ))}
+          </div>
+          <div className="h-32 bg-stone-200 dark:bg-stone-700 rounded-2xl" />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="w-full px-6 py-8 max-w-6xl mx-auto">
@@ -83,25 +100,25 @@ export default function Dashboard() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <StatCard 
-          icon="📚" 
-          label="Total Books" 
-          value={stats.totalBooks} 
+        <StatCard
+          icon="📚"
+          label="Total Books"
+          value={stats.totalBooks}
         />
-        <StatCard 
-          icon="✅" 
-          label="Completed This Year" 
-          value={stats.completedThisYear} 
+        <StatCard
+          icon="✅"
+          label="Completed This Year"
+          value={stats.completedThisYear}
         />
-        <StatCard 
-          icon="📖" 
-          label="Pages Read" 
-          value={stats.pagesRead.toLocaleString()} 
+        <StatCard
+          icon="📖"
+          label="Pages Read"
+          value={(stats.pagesRead || 0).toLocaleString()}
         />
-        <StatCard 
-          icon="🔥" 
-          label="Current Streak" 
-          value={`${stats.currentStreak} days`} 
+        <StatCard
+          icon="🔥"
+          label="Current Streak"
+          value={`${stats.currentStreak} days`}
         />
       </div>
 
@@ -116,14 +133,14 @@ export default function Dashboard() {
           </span>
         </div>
         <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-4 overflow-hidden">
-          <div 
+          <div
             className="h-full bg-gradient-to-r from-blue-600 to-blue-800 rounded-full transition-all duration-500"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
         <p className="text-sm text-stone-500 mt-2">
-          {progressPercent >= 100 
-            ? '🎉 Goal achieved! Amazing! 🎉' 
+          {progressPercent >= 100
+            ? '🎉 Goal achieved! Amazing! 🎉'
             : `${yearlyGoal - stats.completedThisYear} more books to reach your goal`
           }
         </p>
@@ -136,13 +153,10 @@ export default function Dashboard() {
             <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100">
               🏆 Achievements
             </h2>
-            <Link to="/achievements" className="text-sm text-blue-600 hover:underline">
-              View all
-            </Link>
           </div>
           <div className="grid grid-cols-3 gap-4">
             {ACHIEVEMENTS.slice(0, 6).map((achievement, i) => (
-              <div 
+              <div
                 key={i}
                 className={`text-center p-3 rounded-xl ${
                   i < Math.min(stats.completedThisYear, 6)
