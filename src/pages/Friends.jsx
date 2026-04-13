@@ -36,16 +36,38 @@ export default function Friends() {
   }
 
   async function fetchRequests() {
-    const { data, error } = await supabase
-      .from('friend_requests_with_profiles')
+    // pehle requests fetch karo
+    const { data: requestsData, error } = await supabase
+      .from('friend_requests')
       .select('*')
       .eq('receiver_id', user.id)
       .eq('status', 'pending')
 
-    console.log('requests data:', data)
-    console.log('requests error:', error)
+    if (error) {
+      console.error('Error:', error)
+      return
+    }
 
-    setRequests(data || [])
+    if (!requestsData || requestsData.length === 0) {
+      setRequests([])
+      return
+    }
+
+    // phir sender profiles fetch karo
+    const senderIds = requestsData.map(r => r.sender_id)
+    const { data: profilesData } = await supabase
+      .from('profiles')
+      .select('id, display_name, avatar_url')
+      .in('id', senderIds)
+
+    // combine karo dono
+    const combined = requestsData.map(req => ({
+      ...req,
+      sender: profilesData?.find(p => p.id === req.sender_id) || null
+    }))
+
+    console.log('final requests:', combined)
+    setRequests(combined)
   }
 
   async function handleSearch(e) {
@@ -183,10 +205,10 @@ export default function Friends() {
               <div key={req.id} className="flex items-center justify-between p-3 bg-stone-50 dark:bg-stone-700 rounded-lg">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold">
-                    {(req.sender_display_name || '?')[0].toUpperCase()}
+                    {(req.sender?.display_name || '?')[0].toUpperCase()}
                   </div>
                   <span className="font-medium text-stone-900 dark:text-stone-100">
-                    {req.sender_display_name || 'Anonymous'}
+                    {req.sender?.display_name || 'Anonymous'}
                   </span>
                 </div>
                 <div className="flex gap-2">
