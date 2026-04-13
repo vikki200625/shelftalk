@@ -83,6 +83,7 @@ export default function Navbar() {
               <div className="hidden md:flex gap-6 items-center">
                 {[
                   { path: '/dashboard', label: 'Dashboard' },
+                  { path: '/achievements', label: 'Badges' },
                   { path: '/recommendations', label: 'For You' },
                   { path: '/library', label: 'Library' },
                   { path: '/lists', label: 'Lists' },
@@ -192,6 +193,7 @@ export default function Navbar() {
             <div className="py-2 space-y-1">
               {user && [
                 { path: '/dashboard', label: 'Dashboard' },
+                { path: '/achievements', label: 'Badges' },
                 { path: '/recommendations', label: 'For You' },
                 { path: '/library', label: 'Library' },
                 { path: '/lists', label: 'Lists' },
