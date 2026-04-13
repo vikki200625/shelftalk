@@ -106,24 +106,21 @@ export default function Friends() {
   }
 
   async function acceptRequest(requestId, senderId) {
-    await Promise.all([
-      supabase
-        .from('friend_requests')
-        .update({ status: 'accepted' })
-        .eq('id', requestId),
-      supabase
-        .from('user_follows')
-        .insert({
-          follower_id: user.id,
-          following_id: senderId
-        }),
-      supabase
-        .from('user_follows')
-        .insert({
-          follower_id: senderId,
-          following_id: user.id
-        })
-    ])
+    await supabase
+      .from('friend_requests')
+      .update({ status: 'accepted' })
+      .eq('id', requestId)
+
+    // upsert use karo insert ki jagah — conflict ignore karega
+    await supabase
+      .from('user_follows')
+      .upsert({ follower_id: user.id, following_id: senderId }, 
+        { onConflict: 'follower_id, following_id' })
+      
+    await supabase
+      .from('user_follows')
+      .upsert({ follower_id: senderId, following_id: user.id },
+        { onConflict: 'follower_id, following_id' })
 
     showToast('Friend added! 🎉', 'success')
     fetchFriends()
