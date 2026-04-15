@@ -91,13 +91,13 @@ export default function Browse() {
     <div className="w-full px-6 py-8">
       <div className="flex justify-between items-start mb-8">
         <div>
-          <h1 className="text-3xl font-serif italic text-blue-900 dark:text-blue-100 mb-2">Browse Books</h1>
-          <p className="text-stone-500 dark:text-stone-400">Explore books by genre or author</p>
+          <h1 className="text-3xl font-serif italic text-[var(--old-oak)] dark:text-[var(--on-surface)] mb-2">Browse Books</h1>
+          <p className="text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)]">Explore books by genre or author</p>
         </div>
         <select
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          className="px-4 py-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-800 text-stone-900 dark:text-stone-100 text-sm"
+          className="px-4 py-2 rounded-lg border border-[var(--outline-variant)] bg-[var(--surface)] dark:bg-[var(--surface-container)] text-[var(--on-surface)] dark:text-[var(--on-surface)] text-sm"
         >
           {LANGUAGES.map((lang) => (
             <option key={lang.name} value={lang.code}>{lang.name}</option>
@@ -107,7 +107,7 @@ export default function Browse() {
 
       {/* Categories Section */}
       <div className="mb-12">
-        <h2 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-4">Categories</h2>
+        <h2 className="text-lg font-semibold text-[var(--on-surface)] dark:text-[var(--on-surface)] mb-4">Categories</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {CATEGORIES.map((cat) => (
             <button
@@ -118,12 +118,12 @@ export default function Browse() {
               }}
               className={`p-4 rounded-xl border transition text-left ${
                 activeCategory?.name === cat.name
-                  ? 'border-indigo-500 bg-indigo-50 dark:bg-indigo-900/30'
-                  : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 hover:border-indigo-300 dark:hover:border-indigo-600'
+                  ? 'border-[var(--primary)] bg-[var(--primary-container)]/20 dark:bg-[var(--primary-container)]/20'
+                  : 'border-[var(--outline-variant)] bg-[var(--surface)] dark:bg-[var(--surface-container)] hover:border-[var(--primary)]'
               }`}
             >
               <span className="text-2xl mb-2 block">{cat.icon}</span>
-              <span className="text-sm font-medium text-gray-900 dark:text-white">{cat.name}</span>
+              <span className="text-sm font-medium text-[var(--on-surface)] dark:text-[var(--on-surface)]">{cat.name}</span>
             </button>
           ))}
         </div>
@@ -132,12 +132,12 @@ export default function Browse() {
         {activeCategory && (
           <div className="mt-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-medium text-gray-900 dark:text-white">
+              <h3 className="font-medium text-[var(--on-surface)] dark:text-[var(--on-surface)]">
                 {activeCategory.icon} {activeCategory.name}
               </h3>
               <Link
                 to={`/search?subject=${encodeURIComponent(activeCategory.query)}`}
-                className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="text-sm text-[var(--primary)] dark:text-[var(--primary)] hover:underline"
               >
                 View all →
               </Link>
@@ -155,7 +155,7 @@ export default function Browse() {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-sm">No books found in this category.</p>
+              <p className="text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] text-sm">No books found in this category.</p>
             )}
           </div>
         )}
@@ -163,7 +163,7 @@ export default function Browse() {
 
       {/* Popular Authors Section */}
       <div className="mb-12">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Popular Authors</h2>
+        <h2 className="text-lg font-semibold text-[var(--on-surface)] dark:text-[var(--on-surface)] mb-4">Popular Authors</h2>
         <div className="flex flex-wrap gap-2 mb-4">
           {POPULAR_AUTHORS.map((author) => (
             <button
@@ -174,8 +174,8 @@ export default function Browse() {
               }}
               className={`px-4 py-2 rounded-full text-sm font-medium transition ${
                 activeAuthor?.name === author.name
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                  ? 'bg-[var(--primary)] text-white'
+                  : 'bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] hover:bg-[var(--surface-container-high)] dark:hover:bg-[var(--surface-container)]'
               }`}
             >
               {author.name}
@@ -187,12 +187,12 @@ export default function Browse() {
         {activeAuthor && (
           <div className="mt-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-medium text-gray-900 dark:text-white">
+              <h3 className="font-medium text-[var(--on-surface)] dark:text-[var(--on-surface)]">
                 Books by {activeAuthor.name}
               </h3>
               <Link
                 to={`/search?author=${encodeURIComponent(activeAuthor.name)}`}
-                className="text-sm text-indigo-600 dark:text-indigo-400 hover:underline"
+                className="text-sm text-[var(--primary)] dark:text-[var(--primary)] hover:underline"
               >
                 View all →
               </Link>
@@ -210,7 +210,7 @@ export default function Browse() {
                 ))}
               </div>
             ) : (
-              <p className="text-gray-500 dark:text-gray-400 text-sm">No books found for this author.</p>
+              <p className="text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] text-sm">No books found for this author.</p>
             )}
           </div>
         )}
@@ -218,13 +218,13 @@ export default function Browse() {
 
       {/* Browse by Language */}
       <div className="mb-12">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Browse by Language</h2>
+        <h2 className="text-lg font-semibold text-[var(--on-surface)] dark:text-[var(--on-surface)] mb-4">Browse by Language</h2>
         <div className="flex flex-wrap gap-2">
           {LANGUAGES.filter(l => l.code).map((lang) => (
             <Link
               key={lang.code}
               to={`/search?language=${lang.code}`}
-              className="px-4 py-2 rounded-full text-sm font-medium bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+              className="px-4 py-2 rounded-full text-sm font-medium bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] hover:bg-[var(--surface-container-high)] dark:hover:bg-[var(--surface-container)] transition"
             >
               {lang.name}
             </Link>
