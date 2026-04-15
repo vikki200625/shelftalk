@@ -352,12 +352,12 @@ export default function BookDetails() {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="animate-pulse flex gap-8">
-          <div className="w-48 h-72 bg-gray-200 dark:bg-gray-700 rounded-lg flex-shrink-0"></div>
+          <div className="w-48 h-72 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] rounded-lg flex-shrink-0"></div>
           <div className="flex-1">
-            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
-            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2"></div>
-            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-6"></div>
-            <div className="h-20 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+            <div className="h-8 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] rounded w-3/4 mb-4"></div>
+            <div className="h-4 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] rounded w-1/2 mb-2"></div>
+            <div className="h-4 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] rounded w-1/3 mb-6"></div>
+            <div className="h-20 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] rounded w-full"></div>
           </div>
         </div>
       </div>
@@ -367,7 +367,7 @@ export default function BookDetails() {
   if (error) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12">
-        <div className="bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 p-4 rounded-lg">{error}</div>
+        <div className="bg-red-500/10 text-red-600 dark:text-red-400 p-4 rounded-lg">{error}</div>
       </div>
     )
   }
@@ -398,7 +398,7 @@ export default function BookDetails() {
         </div>
 
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{book.title}</h1>
+          <h1 className="text-2xl font-bold text-[var(--on-surface)] mb-1">{book.title}</h1>
           {book.subtitle && (
             <p className="text-gray-500 dark:text-gray-400 mb-2">{book.subtitle}</p>
           )}
@@ -455,7 +455,7 @@ export default function BookDetails() {
                       value={libraryStatus}
                       onChange={(e) => handleAddToLibrary(e.target.value)}
                       disabled={saving}
-                      className="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-[#B85C38] outline-none"
+                      className="px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[var(--on-surface)] text-sm focus:ring-2 focus:ring-[#B85C38] outline-none"
                     >
                       {STATUS_OPTIONS.map((opt) => (
                         <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -510,7 +510,7 @@ export default function BookDetails() {
                               onChange={(e) => setProgressInput(e.target.value)}
                               min="0"
                               max={book.pageCount}
-                              className="w-20 px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm focus:ring-2 focus:ring-[#B85C38] outline-none"
+                              className="w-20 px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[var(--on-surface)] text-sm focus:ring-2 focus:ring-[#B85C38] outline-none"
                             />
                             <span className="text-sm text-gray-500 dark:text-gray-400">/ {book.pageCount} pages</span>
                           </div>
@@ -564,7 +564,7 @@ export default function BookDetails() {
       {/* Description */}
       {book.description && (
         <div className="mb-10">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Description</h2>
+          <h2 className="text-lg font-semibold text-[var(--on-surface)] mb-3">Description</h2>
           <div
             className="text-gray-700 dark:text-gray-300 leading-relaxed prose prose-sm dark:prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: book.description }}
@@ -574,7 +574,7 @@ export default function BookDetails() {
 
       {/* Reviews Section */}
       <div className="mb-10">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Reviews</h2>
+        <h2 className="text-lg font-semibold text-[var(--on-surface)] mb-4">Reviews</h2>
 
         {/* Write/Edit Review */}
         {user && (
@@ -615,7 +615,7 @@ export default function BookDetails() {
                   onChange={(e) => setReviewBody(e.target.value)}
                   placeholder="Share your thoughts about this book..."
                   rows={3}
-                  className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none resize-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
+                  className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[var(--on-surface)] focus:ring-2 focus:ring-[#B85C38] outline-none resize-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
                 />
                 <label className="flex items-center gap-2 mt-2 cursor-pointer">
                   <input
@@ -663,7 +663,7 @@ export default function BookDetails() {
               .map((review) => (
                 <div key={review.id} className="border-b border-gray-100 dark:border-gray-700 pb-4">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-medium text-sm text-gray-900 dark:text-white">
+                    <span className="font-medium text-sm text-[var(--on-surface)]">
                       {review.profiles?.display_name || 'Anonymous'}
                     </span>
                     <StarRating value={review.rating} readOnly size="sm" />
@@ -688,7 +688,7 @@ export default function BookDetails() {
       {/* Discussions Section */}
       <div className="mb-10">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Discussions</h2>
+          <h2 className="text-lg font-semibold text-[var(--on-surface)]">Discussions</h2>
           {user && !activeDiscussion && (
             <button
               onClick={() => setShowNewDiscussion(!showNewDiscussion)}
@@ -707,14 +707,14 @@ export default function BookDetails() {
               value={newDiscussionTitle}
               onChange={(e) => setNewDiscussionTitle(e.target.value)}
               placeholder="Discussion title..."
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
+              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[var(--on-surface)] focus:ring-2 focus:ring-[#B85C38] outline-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
             />
             <textarea
               value={newDiscussionBody}
               onChange={(e) => setNewDiscussionBody(e.target.value)}
               placeholder="What's on your mind? (optional)"
               rows={3}
-              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none resize-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
+              className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[var(--on-surface)] focus:ring-2 focus:ring-[#B85C38] outline-none resize-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
             />
             <label className="flex items-center gap-2 mb-3 cursor-pointer">
               <input
@@ -750,7 +750,7 @@ export default function BookDetails() {
 
             <div className="glass-card rounded-2xl p-4 mb-4">
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-gray-900 dark:text-white">{activeDiscussion.title}</h3>
+                <h3 className="font-semibold text-[var(--on-surface)]">{activeDiscussion.title}</h3>
                 {user && user.id === activeDiscussion.user_id && (
                   <button
                     onClick={() => handleDeleteDiscussion(activeDiscussion.id)}
@@ -778,7 +778,7 @@ export default function BookDetails() {
                 <div key={reply.id} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium text-sm text-gray-900 dark:text-white">
+                      <span className="font-medium text-sm text-[var(--on-surface)]">
                         {reply.profiles?.display_name || 'Anonymous'}
                       </span>
                       {reply.is_spoiler && (
@@ -813,7 +813,7 @@ export default function BookDetails() {
                     value={replyBody}
                     onChange={(e) => setReplyBody(e.target.value)}
                     placeholder="Write a reply..."
-                    className="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
+                    className="flex-1 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[var(--on-surface)] focus:ring-2 focus:ring-[#B85C38] outline-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
                   />
                   <button
                     type="submit"
@@ -851,7 +851,7 @@ export default function BookDetails() {
                   onClick={() => handleOpenDiscussion(d)}
                   className="w-full text-left glass-card rounded-2xl p-4 card-hover"
                 >
-                  <h3 className="font-medium text-gray-900 dark:text-white">{d.title}</h3>
+                  <h3 className="font-medium text-[var(--on-surface)]">{d.title}</h3>
                   <div className="flex items-center gap-2 mt-1 text-xs text-gray-400 dark:text-gray-500">
                     <span>{d.profiles?.display_name || 'Anonymous'}</span>
                     <span>&middot;</span>
