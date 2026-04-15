@@ -119,7 +119,7 @@ export default function MyLibrary() {
 
   return (
     <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">My Library</h1>
+      <h1 className="text-2xl font-bold text-[var(--on-surface)] dark:text-[var(--on-surface)] mb-6">My Library</h1>
 
       {/* Reading Goal */}
       <ReadingGoal />
@@ -132,8 +132,8 @@ export default function MyLibrary() {
             onClick={() => setActiveTab(tab.value)}
             className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition ${
               activeTab === tab.value
-                ? 'bg-indigo-600 text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                ? 'bg-[var(--primary)] text-white'
+                : 'bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] text-[var(--on-surface-variant)] hover:bg-[var(--surface-container-high)] dark:hover:bg-[var(--surface-container)]'
             }`}
           >
             {tab.label}
@@ -149,20 +149,20 @@ export default function MyLibrary() {
         </div>
       ) : books.length === 0 ? (
         <div className="text-center py-16">
-          <svg className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-16 h-16 text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
-          <p className="text-gray-500 dark:text-gray-400 text-lg mb-2">
+          <p className="text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] text-lg mb-2">
             {activeTab === 'all' ? 'Your library is empty' : `No "${STATUS_LABELS[activeTab]}" books`}
           </p>
-          <Link to="/" className="text-indigo-600 dark:text-indigo-400 hover:underline text-sm">
+          <Link to="/" className="text-[var(--primary)] dark:text-[var(--primary)] hover:underline text-sm">
             Search for books to add
           </Link>
         </div>
       ) : (
         <div className="space-y-3">
           {books.map((item) => (
-            <div key={item.id} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-700 transition">
+            <div key={item.id} className="bg-[var(--surface)] dark:bg-[var(--surface-container)] rounded-lg border border-[var(--outline-variant)] hover:border-[var(--primary)]/30 transition">
               <div className="flex gap-4 p-4">
                 <Link to={`/book/${item.books.open_library_key}`} className="flex-shrink-0">
                   {item.books.cover_url ? (
@@ -172,8 +172,8 @@ export default function MyLibrary() {
                       className="w-16 h-24 object-cover rounded"
                     />
                   ) : (
-                    <div className="w-16 h-24 bg-gray-100 dark:bg-gray-700 rounded flex items-center justify-center">
-                      <svg className="w-6 h-6 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-16 h-24 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] rounded flex items-center justify-center">
+                      <svg className="w-6 h-6 text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                       </svg>
                     </div>
@@ -182,17 +182,17 @@ export default function MyLibrary() {
 
                 <div className="flex-1 min-w-0">
                   <Link to={`/book/${item.books.open_library_key}`}>
-                    <h3 className="font-semibold text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition truncate">
+                    <h3 className="font-semibold text-[var(--on-surface)] dark:text-[var(--on-surface)] hover:text-[var(--primary)] dark:hover:text-[var(--primary)] transition truncate">
                       {item.books.title}
                     </h3>
                   </Link>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{item.books.author || 'Unknown Author'}</p>
+                  <p className="text-sm text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] truncate">{item.books.author || 'Unknown Author'}</p>
 
                   <div className="flex items-center gap-3 mt-3 flex-wrap">
                     <select
                       value={item.status}
                       onChange={(e) => handleStatusChange(item.book_id, e.target.value)}
-                      className="text-sm px-3 py-1.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                      className="text-sm px-3 py-1.5 rounded-lg border border-[var(--outline-variant)] bg-[var(--surface)] dark:bg-[var(--surface-container-high)] text-[var(--on-surface)] dark:text-[var(--on-surface)] focus:ring-2 focus:ring-[var(--primary)] outline-none"
                     >
                       {STATUS_TABS.filter(t => t.value !== 'all').map((opt) => (
                         <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -200,7 +200,7 @@ export default function MyLibrary() {
                     </select>
                     <button
                       onClick={() => startEditingNotes(item)}
-                      className="text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition"
+                      className="text-sm text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] hover:text-[var(--primary)] dark:hover:text-[var(--primary)] transition"
                     >
                       {item.notes ? 'Edit Notes' : 'Add Notes'}
                     </button>
@@ -214,8 +214,8 @@ export default function MyLibrary() {
 
                   {/* Notes Display */}
                   {item.notes && editingNotes !== item.id && (
-                    <div className="mt-2 p-2 bg-gray-50 dark:bg-gray-700/50 rounded text-sm text-gray-600 dark:text-gray-300">
-                      <span className="text-xs text-gray-400 dark:text-gray-500 block mb-1">Notes:</span>
+                    <div className="mt-2 p-2 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)]/50 rounded text-sm text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)]">
+                      <span className="text-xs text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] block mb-1">Notes:</span>
                       {item.notes}
                     </div>
                   )}
@@ -224,24 +224,24 @@ export default function MyLibrary() {
 
               {/* Notes Editor */}
               {editingNotes === item.id && (
-                <div className="px-4 pb-4 border-t border-gray-100 dark:border-gray-700 pt-3">
+                <div className="px-4 pb-4 border-t border-[var(--outline-variant)] pt-3">
                   <textarea
                     value={notesText}
                     onChange={(e) => setNotesText(e.target.value)}
                     placeholder="Add your personal notes about this book..."
                     rows={3}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none resize-none text-sm placeholder-gray-400 dark:placeholder-gray-500"
+                    className="w-full px-3 py-2 rounded-lg border border-[var(--outline-variant)] bg-[var(--surface)] dark:bg-[var(--surface-container-high)] text-[var(--on-surface)] dark:text-[var(--on-surface)] focus:ring-2 focus:ring-[var(--primary)] outline-none resize-none text-sm placeholder-[var(--on-surface-variant)]"
                   />
                   <div className="flex gap-2 mt-2">
                     <button
                       onClick={() => handleSaveNotes(item.book_id)}
-                      className="bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-indigo-700 transition"
+                      className="bg-[var(--primary)] text-white px-3 py-1.5 rounded-lg text-sm hover:bg-[var(--old-oak)] transition"
                     >
                       Save
                     </button>
                     <button
                       onClick={() => setEditingNotes(null)}
-                      className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                      className="text-sm text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] hover:text-[var(--on-surface)] dark:hover:text-[var(--on-surface)]"
                     >
                       Cancel
                     </button>

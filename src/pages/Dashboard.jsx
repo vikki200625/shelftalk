@@ -88,10 +88,10 @@ export default function Dashboard() {
 
   return (
     <div className="w-full px-6 py-8 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-serif italic text-blue-900 dark:text-blue-100 mb-2">
+      <h1 className="text-3xl font-serif italic text-[var(--old-oak)] dark:text-[var(--on-surface)] mb-2">
         Your Reading Dashboard
       </h1>
-      <p className="text-stone-500 dark:text-stone-400 mb-8">Track your literary journey</p>
+      <p className="text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] mb-8">Track your literary journey</p>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
@@ -113,22 +113,22 @@ export default function Dashboard() {
       </div>
 
       {/* Yearly Goal Progress */}
-      <div className="bg-white dark:bg-stone-800 rounded-2xl p-6 mb-8 shadow-sm">
+      <div className="bg-[var(--surface)] dark:bg-[var(--surface-container)] rounded-2xl p-6 mb-8 shadow-sm">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100">
+          <h2 className="text-xl font-semibold text-[var(--on-surface)] dark:text-[var(--on-surface)]">
             📖 Reading Goal {new Date().getFullYear()}
           </h2>
-          <span className="text-blue-800 dark:text-blue-200 font-medium">
+          <span className="text-[var(--primary)] dark:text-[var(--primary)] font-medium">
             {stats.completedThisYear} / {yearlyGoal} books
           </span>
         </div>
-        <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-4 overflow-hidden">
+        <div className="w-full bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] rounded-full h-4 overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-blue-600 to-blue-800 rounded-full transition-all duration-500"
+            className="h-full bg-gradient-to-r from-[var(--primary)] to-[var(--old-oak)] rounded-full transition-all duration-500"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
-        <p className="text-sm text-stone-500 mt-2">
+        <p className="text-sm text-[var(--on-surface-variant)] mt-2">
           {progressPercent >= 100
             ? '🎉 Goal achieved! Amazing! 🎉'
             : `${yearlyGoal - stats.completedThisYear} more books to reach your goal`
@@ -138,9 +138,9 @@ export default function Dashboard() {
 
       <div className="grid md:grid-cols-2 gap-8">
         {/* Achievements Preview */}
-        <div className="bg-white dark:bg-stone-800 rounded-2xl p-6 shadow-sm">
+        <div className="bg-[var(--surface)] dark:bg-[var(--surface-container)] rounded-2xl p-6 shadow-sm">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100">
+            <h2 className="text-xl font-semibold text-[var(--on-surface)] dark:text-[var(--on-surface)]">
               🏆 Achievements
             </h2>
           </div>
@@ -150,12 +150,12 @@ export default function Dashboard() {
                 key={i}
                 className={`text-center p-3 rounded-xl ${
                   i < Math.min(stats.completedThisYear, 6)
-                    ? 'bg-blue-50 dark:bg-blue-900/30'
-                    : 'bg-stone-100 dark:bg-stone-700 opacity-50'
+                    ? 'bg-[var(--primary-container)]/20 dark:bg-[var(--primary-container)]/20'
+                    : 'bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] opacity-50'
                 }`}
               >
                 <div className="text-2xl mb-1">{achievement.icon}</div>
-                <div className="text-xs text-stone-600 dark:text-stone-400 line-clamp-1">
+                <div className="text-xs text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] line-clamp-1">
                   {achievement.name}
                 </div>
               </div>
@@ -164,31 +164,31 @@ export default function Dashboard() {
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-white dark:bg-stone-800 rounded-2xl p-6 shadow-sm">
+        <div className="bg-[var(--surface)] dark:bg-[var(--surface-container)] rounded-2xl p-6 shadow-sm">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-stone-900 dark:text-stone-100">
+            <h2 className="text-xl font-semibold text-[var(--on-surface)] dark:text-[var(--on-surface)]">
               📊 Recent Activity
             </h2>
-            <Link to="/library" className="text-sm text-blue-600 hover:underline">
+            <Link to="/library" className="text-sm text-[var(--primary)] hover:underline">
               View library
             </Link>
           </div>
           {recentActivity.length > 0 ? (
             <div className="space-y-3">
               {recentActivity.map((item, i) => (
-                <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-stone-50 dark:bg-stone-700">
+                <div key={i} className="flex items-center gap-3 p-2 rounded-lg bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)]">
                   <div className="w-10 h-14 rounded overflow-hidden flex-shrink-0">
                     {item.books?.cover_url ? (
                       <img src={item.books.cover_url} alt="" className="w-full h-full object-cover" />
                     ) : (
-                      <div className="w-full h-full bg-stone-300 dark:bg-stone-600" />
+                      <div className="w-full h-full bg-[var(--surface-container-high)] dark:bg-[var(--surface-container)]" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium text-stone-900 dark:text-stone-100 text-sm truncate">
+                    <p className="font-medium text-[var(--on-surface)] dark:text-[var(--on-surface)] text-sm truncate">
                       {item.books?.title || 'Unknown'}
                     </p>
-                    <p className="text-xs capitalize text-stone-500">
+                    <p className="text-xs capitalize text-[var(--on-surface-variant)]">
                       {item.status?.replace('_', ' ')}
                     </p>
                   </div>
@@ -196,7 +196,7 @@ export default function Dashboard() {
               ))}
             </div>
           ) : (
-            <p className="text-stone-500 text-center py-8">
+            <p className="text-[var(--on-surface-variant)] text-center py-8">
               No recent activity. Start reading! 📚
             </p>
           )}
@@ -215,19 +215,19 @@ export default function Dashboard() {
 
 function StatCard({ icon, label, value }) {
   return (
-    <div className="bg-white dark:bg-stone-800 rounded-xl p-4 shadow-sm">
+    <div className="bg-[var(--surface)] dark:bg-[var(--surface-container)] rounded-xl p-4 shadow-sm">
       <div className="text-2xl mb-2">{icon}</div>
-      <div className="text-2xl font-bold text-stone-900 dark:text-stone-100">{value}</div>
-      <div className="text-sm text-stone-500">{label}</div>
+      <div className="text-2xl font-bold text-[var(--on-surface)] dark:text-[var(--on-surface)]">{value}</div>
+      <div className="text-sm text-[var(--on-surface-variant)]">{label}</div>
     </div>
   )
 }
 
 function QuickStat({ label, value }) {
   return (
-    <div className="text-center p-4 bg-stone-50 dark:bg-stone-800 rounded-xl">
-      <div className="text-lg font-semibold text-blue-800 dark:text-blue-200">{value}</div>
-      <div className="text-sm text-stone-500">{label}</div>
+    <div className="text-center p-4 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container)] rounded-xl">
+      <div className="text-lg font-semibold text-[var(--primary)] dark:text-[var(--primary)]">{value}</div>
+      <div className="text-sm text-[var(--on-surface-variant)]">{label}</div>
     </div>
   )
 }
