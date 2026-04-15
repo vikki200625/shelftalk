@@ -4,53 +4,72 @@
 
 @layer base {
   :root {
-    --primary: #00236f;
-    --primary-container: #1e3a8a;
+    /* Vintage Color Palette from deepseek_test.html */
+    --sage-shadow: #72725C;
+    --vintage-rose: #BB8A7A;
+    --old-oak: #433C2E;
+    --antique-parchment: #D2BBA0;
+    --dried-lavender: #7A637A;
+    
+    /* Primary - Sage Shadow based */
+    --primary: #72725C;
+    --primary-container: #8a8578;
     --on-primary: #ffffff;
-    --on-primary-container: #90a8ff;
-    --secondary: #665f3d;
-    --secondary-container: #eae0b5;
+    --on-primary-container: #ffffff;
+    
+    /* Secondary - Vintage Rose based */
+    --secondary: #BB8A7A;
+    --secondary-container: #d4afa3;
     --on-secondary: #ffffff;
-    --on-secondary-container: #6a6341;
-    --tertiary: #003210;
-    --tertiary-container: #004b1b;
+    --on-secondary-container: #3d2a24;
+    
+    /* Tertiary - Dried Lavender based */
+    --tertiary: #7A637A;
+    --tertiary-container: #9b8a9c;
     --on-tertiary: #ffffff;
-    --surface: #f7f9ff;
-    --surface-dim: #d6dae1;
-    --surface-container-low: #f0f4fb;
-    --surface-container-high: #e4e8ef;
-    --surface-container: #eaeef5;
-    --on-surface: #171c21;
-    --on-surface-variant: #444651;
-    --outline: #757682;
-    --outline-variant: #c5c5d3;
-    --background: #f7f9ff;
-    --error: #ba1a1a;
+    --on-tertiary-container: #ffffff;
+    
+    /* Surface Colors */
+    --surface: #FAF8F5;
+    --surface-dim: #E8E3DC;
+    --surface-container-low: #F5F1EB;
+    --surface-container-high: #EBE6DE;
+    --surface-container: #F0ECE5;
+    --on-surface: #2A2722;
+    --on-surface-variant: #6B665A;
+    --outline: #9A9286;
+    --outline-variant: #D2BBA0;
+    --background: #FAF8F5;
+    --error: #BA1A1A;
   }
 
   .dark {
-    --primary: #b6c4ff;
-    --primary-container: #264191;
-    --on-primary: #00164e;
-    --on-primary-container: #264191;
-    --secondary: #d1c79d;
-    --secondary-container: #4d4727;
-    --on-secondary: #201c02;
-    --on-secondary-container: #d1c79d;
-    --tertiary: #6bde80;
-    --tertiary-container: #00531f;
-    --on-tertiary: #002108;
-    --surface: #1a1c1e;
-    --surface-dim: #131418;
-    --surface-container-low: #1e2125;
-    --surface-container-high: #282c32;
-    --surface-container: #24282e;
-    --on-surface: #e2e2e5;
-    --on-surface-variant: #c5c5c9;
-    --outline: #9094a1;
-    --outline-variant: #44464b;
-    --background: #1a1c1e;
-    --error: #ffb4ab;
+    /* Dark mode with vintage palette */
+    --primary: #A09A8A;
+    --primary-container: #72725C;
+    --on-primary: #2A2722;
+    --on-primary-container: #E8E3DC;
+    
+    --secondary: #D4AFA3;
+    --secondary-container: #BB8A7A;
+    --on-secondary: #2A2722;
+    --on-secondary-container: #E8E3DC;
+    
+    --tertiary: #9B8A9C;
+    --tertiary-container: #7A637A;
+    --on-tertiary: #2A2722;
+    --on-tertiary-container: #E8E3DC;
+    
+    --surface: #141210;
+    --surface-dim: #0F0E0D;
+    --surface-container-low: #1E1B18;
+    --surface-container-high: #2A2520;
+    --surface-container: #252220;
+    --on-surface: #E8E3DC;
+    --on-surface-variant: #A69F94;
+    --outline: #756A5C;
+    --outline-variant: #433C2E;
+    --background: #141210;
   }
 
   body {

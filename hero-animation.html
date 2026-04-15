@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShelfTalk - Discover Your Next Great Read</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Your Vintage Color Palette */
+      --sage-shadow: #72725C;
+      --vintage-rose: #BB8A7A;
+      --old-oak: #433C2E;
+      --antique-parchment: #D2BBA0;
+      --dried-lavender: #7A637A;
+      
+      /* Primary Colors - using your palette */
+      --primary: var(--sage-shadow);
+      --primary-dark: var(--old-oak);
+      --blue-700: var(--vintage-rose);
+      --blue-800: var(--sage-shadow);
+      --blue-900: var(--old-oak);
+      --blue-100: var(--antique-parchment);
+      
+      /* Stone/Natural tones */
+      --stone-100: #faf8f5;
+      --stone-200: #f0ede5;
+      --stone-300: #e5dfd0;
+      --stone-400: #a69f8f;
+      --stone-500: var(--sage-shadow);
+      --stone-600: #6b665a;
+      --stone-700: var(--old-oak);
+      --stone-800: #2a2720;
+      --stone-900: #1a1815;
+      --stone-950: #0d0c0a;
+      
+      --surface-container-high: var(--antique-parchment);
+      --surface-container-low: var(--stone-100);
+      
+      /* Button colors */
+      --btn-primary: var(--old-oak);
+      --btn-secondary: var(--vintage-rose);
+    }
+
+    body {
+      background: var(--stone-100);
+      color: var(--stone-900);
+    }
+
+    body.dark {
+      --blue-100: #3a3530;
+      --stone-100: #151311;
+      --stone-200: #252220;
+      --stone-300: #353230;
+      --stone-400: #555045;
+      --surface-container-high: #252220;
+      --surface-container-low: #1a1815;
+    }
+
+    /* Vintage Rose Theme */
+    [data-theme="vintage-rose"] {
+      --sage-shadow: #BB8A7A;
+      --vintage-rose: #a07868;
+      --blue-100: #f5ebe6;
+    }
+
+    /* Old Oak Theme */
+    [data-theme="old-oak"] {
+      --sage-shadow: #433C2E;
+      --old-oak: #322a20;
+      --blue-100: #e5dfd5;
+    }
+
+    /* Antique Parchment Theme */
+    [data-theme="parchment"] {
+      --sage-shadow: #D2BBA0;
+      --antique-parchment: #c2aa88;
+      --vintage-rose: #b89878;
+      --blue-100: #faf5ec;
+    }
+
+    /* Dried Lavender Theme */
+    [data-theme="lavender"] {
+      --sage-shadow: #7A637A;
+      --vintage-rose: #605060;
+      --blue-100: #eae5ec;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--stone-100);
+      color: var(--stone-900);
+    }
+
+    /* Dark mode support via class */
+    body.dark {
+      background: var(--stone-950);
+      color: var(--stone-100);
+    }
+
+    /* ============ HERO SECTION ============ */
+
+    /* Background orbs - matching original */
+    .bg-orb-1 {
+      position: absolute;
+      right: -80px;
+      top: 80px;
+      width: 384px;
+      height: 384px;
+      background: var(--stone-200);
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: orbFloat1 15s ease-in-out infinite;
+    }
+
+    body.dark .bg-orb-1 {
+      background: var(--stone-800);
+    }
+
+    .bg-orb-2 {
+      position: absolute;
+      left: -80px;
+      bottom: 0;
+      width: 320px;
+      height: 320px;
+      background: #dbeafe;
+      border-radius: 50%;
+      filter: blur(100px);
+      animation: orbFloat2 18s ease-in-out infinite;
+    }
+
+    body.dark .bg-orb-2 {
+      background: rgba(30, 58, 138, 0.2);
+    }
+
+    @keyframes orbFloat1 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-20px, 30px); }
+    }
+
+    @keyframes orbFloat2 {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(20px, -20px); }
+    }
+
+    /* Hero section layout */
+    .hero {
+      position: relative;
+      padding: 6rem 1.5rem;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        padding: 8rem 1.5rem;
+      }
+    }
+
+    .hero-content {
+      max-width: 80rem;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Headline - matching original italic serif style */
+    .headline {
+      font-family: 'Newsreader', serif;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      font-style: italic;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 2rem;
+      color: var(--sage-shadow);
+    }
+
+    body.dark .headline {
+      color: var(--antique-parchment);
+    }
+
+    /* Search bar - matching original */
+    .search-container {
+      width: 100%;
+      max-width: 42rem;
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .search-form {
+      display: flex;
+      align-items: center;
+      background: var(--surface-container-high);
+      border-radius: 9999px;
+      padding: 1rem 1.5rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+      gap: 0.5rem;
+    }
+
+    body.dark .search-form {
+      background: var(--stone-800);
+    }
+
+    /* Search bar focus effect */
+    .search-form:focus-within {
+      box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.2);
+    }
+
+    .search-icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--stone-400);
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 1rem;
+      color: var(--stone-900);
+    }
+
+    body.dark .search-input {
+      color: var(--stone-100);
+    }
+
+    .search-input::placeholder {
+      color: var(--stone-500);
+    }
+
+    .search-btn {
+      background: var(--blue-700);
+      color: white;
+      padding: 0.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+
+    .search-btn:hover {
+      background: var(--blue-800);
+      transform: scale(1.05);
+    }
+
+    .search-btn svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    /* CTA Buttons - matching original */
+    .cta-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+      .cta-buttons {
+        flex-direction: row;
+      }
+    }
+
+    .btn-primary {
+      padding: 1rem 2.5rem;
+      background: var(--btn-primary);
+      color: white;
+      border-radius: 9999px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 15px -3px rgba(67, 60, 46, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      padding: 1rem 2.5rem;
+      color: var(--btn-secondary);
+      font-weight: 500;
+      border-radius: 9999px;
+      background: transparent;
+      border: 2px solid var(--btn-secondary);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: var(--btn-secondary);
+      color: white;
+    }
+
+    body.dark .btn-secondary {
+      background: var(--stone-800);
+    }
+
+    /* ============ RECENTLY VIEWED SECTION ============ */
+
+    .recent-section {
+      padding: 5rem 0;
+      background: var(--surface-container-low);
+    }
+
+    body.dark .recent-section {
+      background: var(--stone-900);
+    }
+
+    .recent-container {
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .recent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2rem;
+    }
+
+    .recent-label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--stone-500);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .recent-title {
+      font-family: 'Newsreader', serif;
+      font-size: 2.25rem;
+      color: var(--stone-900);
+    }
+
+    body.dark .recent-title {
+      color: var(--stone-100);
+    }
+
+    .clear-btn {
+      font-size: 0.875rem;
+      color: var(--stone-500);
+      cursor: pointer;
+      transition: color 0.3s ease;
+      background: none;
+      border: none;
+    }
+
+    .clear-btn:hover {
+      color: var(--stone-700);
+    }
+
+    body.dark .clear-btn:hover {
+      color: var(--stone-300);
+    }
+
+    .books-scroll {
+      display: flex;
+      gap: 2rem;
+      overflow-x: auto;
+      padding-bottom: 2rem;
+      scrollbar-width: none;
+    }
+
+    /* ============ FEATURES SECTION ============ */
+
+    .features-section {
+      padding: 5rem 0;
+    }
+
+    .features-container {
+      max-width: 80rem;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .features-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .feature-icon {
+      font-size: 2.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .feature-title {
+      font-family: 'Newsreader', serif;
+      font-size: 1.25rem;
+      color: var(--stone-900);
+      margin-bottom: 0.5rem;
+    }
+
+    body.dark .feature-title {
+      color: var(--stone-100);
+    }
+
+    .feature-desc {
+      color: var(--stone-600);
+    }
+
+    body.dark .feature-desc {
+      color: var(--stone-400);
+    }
+
+    /* ============ ANIMATIONS ============ */
+
+    /* ============ THEME SWITCHER ============ */
+    .theme-switcher {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem;
+      background: white;
+      border-radius: 9999px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      z-index: 100;
+    }
+
+    body.dark .theme-switcher {
+      background: var(--stone-800);
+    }
+
+    .theme-btn {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .theme-btn.active {
+      border-color: var(--stone-900);
+    }
+
+    body.dark .theme-btn.active {
+      border-color: white;
+    }
+
+    /* Color options */
+    .theme-sage { background: #72725C; }
+    .theme-rose { background: #BB8A7A; }
+    .theme-oak { background: #433C2E; }
+    .theme-parchment { background: #D2BBA0; }
+    .theme-lavender { background: #7A637A; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .logo-float {
+      display: inline-block;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    /* Hero entrance animation */
+    .animate-in {
+      opacity: 0;
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+
+    /* Theme switcher JS */
+    function setTheme(theme) {
+      document.body.setAttribute('data-theme', theme);
+      localStorage.setItem('shelftalk-theme', theme);
+      document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`[data-theme="${theme}"]`).classList.add('active');
+    }
+    
+    // Load saved theme - default to sage
+    const saved = localStorage.getItem('shelftalk-theme') || 'sage';
+    setTimeout(() => setTheme(saved), 100);
+  </style>
+</head>
+<body>
+  <!-- Theme Switcher -->
+  <div class="theme-switcher">
+    <button class="theme-btn theme-sage active" data-color="sage" data-theme="sage" onclick="setTheme('sage')" title="Sage Shadow"></button>
+    <button class="theme-btn theme-rose" data-color="vintage-rose" data-theme="vintage-rose" onclick="setTheme('vintage-rose')" title="Vintage Rose"></button>
+    <button class="theme-btn theme-oak" data-color="old-oak" data-theme="old-oak" onclick="setTheme('old-oak')" title="Old Oak"></button>
+    <button class="theme-btn theme-parchment" data-color="parchment" data-theme="parchment" onclick="setTheme('parchment')" title="Antique Parchment"></button>
+    <button class="theme-btn theme-lavender" data-color="lavender" data-theme="lavender" onclick="setTheme('lavender')" title="Dried Lavender"></button>
+  </div>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero">
+      <!-- Background orbs matching original -->
+      <div class="bg-orb-1" aria-hidden="true"></div>
+      <div class="bg-orb-2" aria-hidden="true"></div>
+
+      <div class="hero-content">
+        <!-- Headline - matching original -->
+        <h1 class="headline animate-in delay-1">
+          Discover Your Next <br> Great Read
+        </h1>
+
+        <!-- Search Bar - matching original -->
+        <div class="search-container animate-in delay-2">
+          <form class="search-form" onsubmit="event.preventDefault()">
+            <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search by title, author, or ISBN..."
+            >
+            <button type="submit" class="search-btn">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- CTA Buttons - matching original -->
+        <div class="cta-buttons animate-in delay-3">
+          <button class="btn-primary">Join the Community</button>
+          <button class="btn-secondary">Browse Books</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recently Viewed Section -->
+    <section class="recent-section">
+      <div class="recent-container">
+        <div class="recent-header">
+          <div>
+            <span class="recent-label">Your History</span>
+            <h2 class="recent-title">Recently Viewed</h2>
+          </div>
+          <button class="clear-btn">Clear All</button>
+        </div>
+
+        <div class="books-scroll">
+          <!-- Placeholder book cards -->
+          <div style="flex:none;width:12rem;height:18rem;background:linear-gradient(135deg,#e2e8f0,#cbd5e1);border-radius:0.5rem;"></div>
+          <div style="flex:none;width:12rem;height:18rem;background:linear-gradient(135deg,#e2e8f0,#cbd5e1);border-radius:0.5rem;"></div>
+          <div style="flex:none;width:12rem;height:18rem;background:linear-gradient(135deg,#e2e8f0,#cbd5e1);border-radius:0.5rem;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+      <div class="features-container">
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3 class="feature-title">Discover</h3>
+            <p class="feature-desc">Search millions of books from Google Books & Open Library</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📚</div>
+            <h3 class="feature-title">Track</h3>
+            <p class="feature-desc">Build your library and track reading progress</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3 class="feature-title">Connect</h3>
+            <p class="feature-desc">Join discussions and follow fellow readers</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

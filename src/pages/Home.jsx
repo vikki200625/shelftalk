@@ -31,13 +31,13 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative px-6 py-24 md:py-32 overflow-hidden">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl italic text-blue-900 dark:text-blue-100 leading-tight tracking-tight mb-8">
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl italic text-[var(--old-oak)] dark:text-[var(--on-surface)] leading-tight tracking-tight mb-8">
             Discover Your Next <br/> Great Read
           </h1>
           
           <div className="w-full max-w-2xl relative mb-12">
-            <form onSubmit={handleSearch} className="bg-surface-container-high dark:bg-stone-800 rounded-full px-6 py-4 flex items-center shadow-sm group focus-within:ring-2 focus-within:ring-blue-700/20 transition-all">
-              <svg className="w-5 h-5 text-stone-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <form onSubmit={handleSearch} className="bg-[var(--surface-container-high)] dark:bg-[var(--surface-container-high)] rounded-full px-6 py-4 flex items-center shadow-sm group focus-within:ring-2 focus-within:ring-[var(--primary)]/20 transition-all border border-[var(--outline-variant)]">
+              <svg className="w-5 h-5 text-[var(--on-surface-variant)] mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <input
@@ -45,9 +45,9 @@ export default function Home() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search by title, author, or ISBN..."
-                className="bg-transparent border-none focus:ring-0 w-full text-stone-900 dark:text-stone-100 placeholder-stone-500 font-body"
+                className="bg-transparent border-none focus:ring-0 w-full text-[var(--on-surface)] dark:text-[var(--on-surface)] placeholder-[var(--on-surface-variant)] font-body"
               />
-              <button type="submit" className="p-2 rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors">
+              <button type="submit" className="p-2 rounded-full bg-[var(--primary)] text-white hover:bg-[var(--old-oak)] transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -58,13 +58,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-6">
             <button 
               onClick={() => navigate(user ? '/library' : '/signup')}
-              className="px-10 py-4 bg-blue-800 text-white rounded-full font-medium hover:scale-95 transition-all shadow-lg"
+              className="px-10 py-4 bg-[var(--primary)] text-white rounded-full font-medium hover:scale-95 transition-all shadow-lg hover:bg-[var(--old-oak)]"
             >
               {user ? 'Go to My Library' : 'Join the Community'}
             </button>
             <Link 
               to="/browse"
-              className="px-10 py-4 text-blue-800 font-medium hover:bg-surface-container-low dark:hover:bg-stone-800 rounded-full transition-all"
+              className="px-10 py-4 text-[var(--primary)] font-medium hover:bg-[var(--surface-container-low)] dark:hover:bg-[var(--surface-container-high)] rounded-full transition-all border border-[var(--primary)]"
             >
               Browse Books
             </Link>
@@ -72,22 +72,22 @@ export default function Home() {
         </div>
         
         {/* Asymmetric background elements */}
-        <div className="absolute -right-20 top-20 w-96 h-96 bg-stone-200 dark:bg-stone-800 rounded-full blur-3xl -z-0"></div>
-        <div className="absolute -left-20 bottom-0 w-80 h-80 bg-blue-100 dark:bg-blue-900/20 rounded-full blur-3xl -z-0"></div>
+        <div className="absolute -right-20 top-20 w-96 h-96 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] rounded-full blur-3xl -z-0"></div>
+        <div className="absolute -left-20 bottom-0 w-80 h-80 bg-[var(--vintage-rose)]/20 dark:bg-[var(--vintage-rose)]/10 rounded-full blur-3xl -z-0"></div>
       </section>
 
       {/* Recently Viewed */}
       {recentlyViewed.length > 0 && (
-        <section className="py-20 bg-surface-container-low dark:bg-stone-900">
+        <section className="py-20 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container)]">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex justify-between items-end mb-8">
               <div>
-                <span className="uppercase tracking-widest text-xs text-stone-500 font-semibold mb-2 block">Your History</span>
-                <h2 className="font-serif text-4xl text-stone-900 dark:text-stone-100">Recently Viewed</h2>
+                <span className="uppercase tracking-widest text-xs text-[var(--on-surface-variant)] font-semibold mb-2 block">Your History</span>
+                <h2 className="font-serif text-4xl text-[var(--on-surface)] dark:text-[var(--on-surface)]">Recently Viewed</h2>
               </div>
               <button
                 onClick={handleClearRecent}
-                className="text-sm text-stone-500 hover:text-stone-700 dark:hover:text-stone-300 transition-colors"
+                className="text-sm text-[var(--on-surface-variant)] hover:text-[var(--on-surface)] dark:hover:text-[var(--on-surface)] transition-colors"
               >
                 Clear All
               </button>
@@ -113,10 +113,10 @@ export default function Home() {
               { icon: '📚', title: 'Track', desc: 'Build your library and track reading progress' },
               { icon: '💬', title: 'Connect', desc: 'Join discussions and follow fellow readers' }
             ].map((feature, i) => (
-              <div key={i} className="text-center p-8">
+              <div key={i} className="text-center p-8 border border-[var(--outline-variant)] rounded-2xl bg-[var(--surface)]">
                 <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="font-serif text-xl text-stone-900 dark:text-stone-100 mb-2">{feature.title}</h3>
-                <p className="text-stone-600 dark:text-stone-400">{feature.desc}</p>
+                <h3 className="font-serif text-xl text-[var(--on-surface)] dark:text-[var(--on-surface)] mb-2">{feature.title}</h3>
+                <p className="text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)]">{feature.desc}</p>
               </div>
             ))}
           </div>
