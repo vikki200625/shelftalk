@@ -140,14 +140,14 @@ export default function Friends() {
 
   return (
     <div className="w-full px-6 py-8 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-serif italic text-blue-900 dark:text-blue-100 mb-2">
+      <h1 className="text-3xl font-serif italic text-[var(--old-oak)] dark:text-[var(--on-surface)] mb-2">
         Friends
       </h1>
-      <p className="text-stone-500 dark:text-stone-400 mb-8">Connect with fellow readers</p>
+      <p className="text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] mb-8">Connect with fellow readers</p>
 
       {/* Search Users */}
-      <div className="bg-white dark:bg-stone-800 rounded-2xl p-6 mb-8">
-        <h2 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-4">
+      <div className="bg-[var(--surface)] dark:bg-[var(--surface-container)] rounded-2xl p-6 mb-8">
+        <h2 className="text-lg font-semibold text-[var(--on-surface)] dark:text-[var(--on-surface)] mb-4">
           🔍 Find Friends
         </h2>
         <form onSubmit={handleSearch} className="flex gap-3">
@@ -156,12 +156,12 @@ export default function Friends() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by name..."
-            className="flex-1 px-4 py-2 rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100"
+            className="flex-1 px-4 py-2 rounded-lg border border-[var(--outline-variant)] bg-[var(--surface)] dark:bg-[var(--surface-container-high)] text-[var(--on-surface)] dark:text-[var(--on-surface)]"
           />
           <button
             type="submit"
             disabled={searching}
-            className="px-6 py-2 bg-blue-700 text-white rounded-lg hover:bg-blue-800"
+            className="px-6 py-2 bg-[var(--primary)] text-white rounded-lg hover:bg-[var(--old-oak)]"
           >
             {searching ? 'Searching...' : 'Search'}
           </button>
@@ -170,18 +170,18 @@ export default function Friends() {
         {searchResults.length > 0 && (
           <div className="mt-4 space-y-2">
             {searchResults.map(profile => (
-              <div key={profile.id} className="flex items-center justify-between p-3 bg-stone-50 dark:bg-stone-700 rounded-lg">
+              <div key={profile.id} className="flex items-center justify-between p-3 bg-[var(--surface-container-low)] dark:bg-[var(--surface-container-high)] rounded-lg">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-700 flex items-center justify-center text-white font-bold">
+                  <div className="w-10 h-10 rounded-full bg-[var(--primary)] flex items-center justify-center text-white font-bold">
                     {(profile.display_name || '?')[0].toUpperCase()}
                   </div>
-                  <span className="font-medium text-stone-900 dark:text-stone-100">
+                  <span className="font-medium text-[var(--on-surface)] dark:text-[var(--on-surface)]">
                     {profile.display_name || 'Anonymous'}
                   </span>
                 </div>
                 <button
                   onClick={() => sendFriendRequest(profile.id)}
-                  className="px-4 py-1 text-sm bg-blue-700 text-white rounded-full hover:bg-blue-800"
+                  className="px-4 py-1 text-sm bg-[var(--primary)] text-white rounded-full hover:bg-[var(--old-oak)]"
                 >
                   Add Friend
                 </button>

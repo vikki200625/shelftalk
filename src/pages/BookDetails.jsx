@@ -400,30 +400,30 @@ export default function BookDetails() {
         <div className="flex-1">
           <h1 className="text-2xl font-bold text-[var(--on-surface)] mb-1">{book.title}</h1>
           {book.subtitle && (
-            <p className="text-gray-500 dark:text-gray-400 mb-2">{book.subtitle}</p>
+            <p className="text-[var(--on-surface-variant)] mb-2">{book.subtitle}</p>
           )}
           <p className="text-gray-600 dark:text-gray-300 mb-1">by {authorsText}</p>
 
           {book.averageRating && (
             <div className="flex items-center gap-2 mb-2">
               <StarRating value={Math.round(book.averageRating)} readOnly size="sm" />
-              <span className="text-sm text-gray-500 dark:text-gray-400">
+              <span className="text-sm text-[var(--on-surface-variant)]">
                 {book.averageRating.toFixed(1)} ({book.ratingsCount} ratings)
               </span>
             </div>
           )}
 
           {book.publishYear && (
-            <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">Published: {book.publishYear}</p>
+            <p className="text-[var(--on-surface-variant)] text-sm mb-1">Published: {book.publishYear}</p>
           )}
           {book.publisher && (
-            <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">Publisher: {book.publisher}</p>
+            <p className="text-[var(--on-surface-variant)] text-sm mb-1">Publisher: {book.publisher}</p>
           )}
           {book.pageCount && (
-            <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">{book.pageCount} pages</p>
+            <p className="text-[var(--on-surface-variant)] text-sm mb-1">{book.pageCount} pages</p>
           )}
           {(book.isbn13 || book.isbn10 || book.isbn) && (
-            <p className="text-gray-500 dark:text-gray-400 text-sm mb-1">ISBN: {book.isbn13 || book.isbn10 || book.isbn}</p>
+            <p className="text-[var(--on-surface-variant)] text-sm mb-1">ISBN: {book.isbn13 || book.isbn10 || book.isbn}</p>
           )}
 
           {tags.length > 0 && (
@@ -512,7 +512,7 @@ export default function BookDetails() {
                               max={book.pageCount}
                               className="w-20 px-2 py-1 rounded border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[var(--on-surface)] text-sm focus:ring-2 focus:ring-[#B85C38] outline-none"
                             />
-                            <span className="text-sm text-gray-500 dark:text-gray-400">/ {book.pageCount} pages</span>
+                            <span className="text-sm text-[var(--on-surface-variant)]">/ {book.pageCount} pages</span>
                           </div>
                           <div className="flex gap-2">
                             <button
@@ -524,7 +524,7 @@ export default function BookDetails() {
                             </button>
                             <button
                               onClick={() => setEditingProgress(false)}
-                              className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                              className="text-xs text-[var(--on-surface-variant)] hover:text-gray-700 dark:hover:text-gray-300"
                             >
                               Cancel
                             </button>
@@ -541,7 +541,7 @@ export default function BookDetails() {
           )}
 
           {!user && (
-            <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+            <p className="mt-4 text-sm text-[var(--on-surface-variant)]">
               <Link to="/login" className="text-[#B85C38] dark:text-[#D4A574] hover:underline">Login</Link> to add this book to your library.
             </p>
           )}
@@ -581,10 +581,10 @@ export default function BookDetails() {
           <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-6">
             {userReview && !editingReview ? (
               <div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Your review:</p>
+                <p className="text-sm text-[var(--on-surface-variant)] mb-2">Your review:</p>
                 <div className="flex items-center gap-2 mb-2">
                   <StarRating value={userReview.rating} readOnly />
-                  <span className="text-sm text-gray-500 dark:text-gray-400">{userReview.rating}/5</span>
+                  <span className="text-sm text-[var(--on-surface-variant)]">{userReview.rating}/5</span>
                 </div>
                 {userReview.body && <p className="text-gray-700 dark:text-gray-300 mb-3">{userReview.body}</p>}
                 <div className="flex gap-2">
@@ -604,7 +604,7 @@ export default function BookDetails() {
               </div>
             ) : (
               <form onSubmit={handleSubmitReview}>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+                <p className="text-sm text-[var(--on-surface-variant)] mb-2">
                   {editingReview ? 'Edit your review:' : 'Write a review:'}
                 </p>
                 <div className="mb-3">
@@ -642,7 +642,7 @@ export default function BookDetails() {
                         setReviewRating(userReview.rating)
                         setReviewBody(userReview.body || '')
                       }}
-                      className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                      className="text-sm text-[var(--on-surface-variant)] hover:text-gray-700 dark:hover:text-gray-300"
                     >
                       Cancel
                     </button>
@@ -655,7 +655,7 @@ export default function BookDetails() {
 
         {/* All Reviews */}
         {reviews.filter(r => !user || r.user_id !== user.id).length === 0 && !userReview ? (
-          <p className="text-gray-500 dark:text-gray-400 text-sm">No reviews yet. Be the first to review this book!</p>
+          <p className="text-[var(--on-surface-variant)] text-sm">No reviews yet. Be the first to review this book!</p>
         ) : (
           <div className="space-y-4">
             {reviews
@@ -834,7 +834,7 @@ export default function BookDetails() {
                 </label>
               </div>
             ) : (
-              <p className="text-sm text-gray-500 dark:text-gray-400 ml-4">
+              <p className="text-sm text-[var(--on-surface-variant)] ml-4">
                 <Link to="/login" className="text-[#B85C38] dark:text-[#D4A574] hover:underline">Login</Link> to reply.
               </p>
             )}
@@ -842,7 +842,7 @@ export default function BookDetails() {
         ) : (
           /* Discussion List */
           discussions.length === 0 ? (
-            <p className="text-gray-500 dark:text-gray-400 text-sm">No discussions yet. Start one!</p>
+            <p className="text-[var(--on-surface-variant)] text-sm">No discussions yet. Start one!</p>
           ) : (
             <div className="space-y-3">
               {discussions.map((d) => (

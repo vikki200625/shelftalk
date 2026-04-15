@@ -107,10 +107,10 @@ export default function Achievements() {
   return (
     <div className="w-full px-6 py-8 max-w-6xl mx-auto">
       <div className="flex items-center gap-4 mb-8">
-        <h1 className="text-3xl font-serif italic text-blue-900 dark:text-blue-100">
+        <h1 className="text-3xl font-serif italic text-[var(--old-oak)] dark:text-[var(--on-surface)]">
           🏆 Achievements
         </h1>
-        <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 rounded-full text-sm">
+        <span className="px-3 py-1 bg-[var(--primary-container)]/30 text-[var(--primary)] dark:text-[var(--primary)] rounded-full text-sm">
           {earnedCount} / {ACHIEVEMENTS_LIST.length}
         </span>
       </div>
@@ -134,23 +134,23 @@ export default function Achievements() {
               key={index}
               className={`relative p-5 rounded-2xl border-2 transition-all ${
                 earned
-                  ? 'bg-gradient-to-br from-blue-50 to-amber-50 dark:from-blue-900/30 dark:to-amber-900/30 border-blue-300 dark:border-blue-700'
-                  : 'bg-white dark:bg-stone-800 border-stone-200 dark:border-stone-700'
+                  ? 'bg-gradient-to-br from-[var(--primary-container)]/20 to-[var(--secondary-container)]/20 border-[var(--primary)]/30 dark:border-[var(--primary)]/50'
+                  : 'bg-[var(--surface)] dark:bg-[var(--surface-container)] border-[var(--outline-variant)]'
               }`}
             >
               {/* Lock overlay */}
               {!earned && (
-                <div className="absolute inset-0 bg-white/50 dark:bg-stone-800/50 rounded-2xl flex items-center justify-center">
+                <div className="absolute inset-0 bg-[var(--surface)]/50 dark:bg-[var(--surface-container)]/50 rounded-2xl flex items-center justify-center">
                   <span className="text-3xl opacity-30">🔒</span>
                 </div>
               )}
               
               <div className="text-center">
                 <div className="text-4xl mb-2">{achievement.icon}</div>
-                <h3 className={`font-semibold text-sm mb-1 ${earned ? 'text-blue-900 dark:text-blue-100' : 'text-stone-600 dark:text-stone-400'}`}>
+                <h3 className={`font-semibold text-sm mb-1 ${earned ? 'text-[var(--on-surface)] dark:text-[var(--on-surface)]' : 'text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)]'}`}>
                   {achievement.name}
                 </h3>
-                <p className="text-xs text-stone-500 dark:text-stone-400 mb-3">
+                <p className="text-xs text-[var(--on-surface-variant)] dark:text-[var(--on-surface-variant)] mb-3">
                   {achievement.desc}
                 </p>
                 

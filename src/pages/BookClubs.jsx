@@ -126,7 +126,7 @@ export default function BookClubs() {
     <div className="w-full px-6 py-8 max-w-6xl mx-auto">
       <div className="flex justify-between items-start mb-8">
         <div>
-          <h1 className="text-3xl font-serif italic text-blue-900 dark:text-blue-100 mb-2">
+          <h1 className="text-3xl font-serif italic text-[var(--old-oak)] dark:text-[var(--on-surface)] mb-2">
             📖 Book Clubs
           </h1>
           <p className="text-stone-500 dark:text-stone-400">

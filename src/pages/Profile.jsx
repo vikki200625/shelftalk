@@ -101,7 +101,7 @@ export default function Profile() {
               type="text"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              className="text-xl font-semibold text-center w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-purple-500 outline-none mb-3"
+              className="text-xl font-semibold text-center w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[var(--on-surface)] focus:ring-2 focus:ring-purple-500 outline-none mb-3"
               placeholder="Your display name"
             />
             <div className="flex justify-center gap-2">
@@ -115,7 +115,7 @@ export default function Profile() {
               <button
                 type="button"
                 onClick={() => { setEditing(false); setDisplayName(profile?.display_name || '') }}
-                className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                className="text-sm text-[var(--on-surface-variant)] hover:text-gray-700 dark:hover:text-gray-300"
               >
                 Cancel
               </button>
@@ -123,7 +123,7 @@ export default function Profile() {
           </form>
         ) : (
           <>
-            <h1 className="text-xl font-semibold text-gray-900 dark:text-white mb-1">
+            <h1 className="text-xl font-semibold text-[var(--on-surface)] mb-1">
               {profile?.display_name || 'User'}
             </h1>
             <button
@@ -135,29 +135,29 @@ export default function Profile() {
           </>
         )}
 
-        <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">{user.email}</p>
+        <p className="text-[var(--on-surface-variant)] text-sm mb-6">{user.email}</p>
 
         {/* Stats */}
         <div className="grid grid-cols-5 gap-4 border-t border-gray-100 dark:border-gray-700 pt-6">
           <div>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.library}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Books</p>
+            <p className="text-2xl font-bold text-[var(--on-surface)]">{stats.library}</p>
+            <p className="text-xs text-[var(--on-surface-variant)]">Books</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.reviews}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Reviews</p>
+            <p className="text-2xl font-bold text-[var(--on-surface)]">{stats.reviews}</p>
+            <p className="text-xs text-[var(--on-surface-variant)]">Reviews</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.discussions}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Posts</p>
+            <p className="text-2xl font-bold text-[var(--on-surface)]">{stats.discussions}</p>
+            <p className="text-xs text-[var(--on-surface-variant)]">Posts</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.followers}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Followers</p>
+            <p className="text-2xl font-bold text-[var(--on-surface)]">{stats.followers}</p>
+            <p className="text-xs text-[var(--on-surface-variant)]">Followers</p>
           </div>
           <div>
-            <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.following}</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">Following</p>
+            <p className="text-2xl font-bold text-[var(--on-surface)]">{stats.following}</p>
+            <p className="text-xs text-[var(--on-surface-variant)]">Following</p>
           </div>
         </div>
 

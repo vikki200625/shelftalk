@@ -158,7 +158,7 @@ export default function SearchResults() {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             placeholder="Search by title, author, or keyword..."
-            className="w-full px-5 py-3 pr-14 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500"
+            className="w-full px-5 py-3 pr-14 rounded-lg border border-gray-300 dark:border-gray-600 bg-[var(--surface)] text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none placeholder-gray-400 dark:placeholder-gray-500"
           />
           <button
             type="submit"
@@ -194,7 +194,7 @@ export default function SearchResults() {
 
       {/* Filters */}
       {showFilters && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6 p-4 bg-[var(--surface-container-high)] rounded-lg border border-gray-200 dark:border-gray-700">
           <div>
             <label className="block text-xs font-medium text-[var(--on-surface-variant)] mb-1">Category</label>
             <select

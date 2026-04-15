@@ -77,7 +77,7 @@ export default function BookLists() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Book Lists</h1>
+        <h1 className="text-2xl font-bold text-[var(--on-surface)]">My Book Lists</h1>
         <button
           onClick={() => setShowCreate(!showCreate)}
           className="btn-warm"
@@ -94,14 +94,14 @@ export default function BookLists() {
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
             placeholder="List title (e.g., Best Sci-Fi Books)"
-            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
+            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[var(--on-surface)] focus:ring-2 focus:ring-[#B85C38] outline-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
           />
           <textarea
             value={newDesc}
             onChange={(e) => setNewDesc(e.target.value)}
             placeholder="Description (optional)"
             rows={2}
-            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none resize-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
+            className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-[var(--on-surface)] focus:ring-2 focus:ring-[#B85C38] outline-none resize-none text-sm mb-3 placeholder-gray-400 dark:placeholder-gray-500"
           />
           <button
             type="submit"
@@ -134,7 +134,7 @@ export default function BookLists() {
             <div key={list.id} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-200 dark:hover:border-indigo-700 transition">
               <div className="p-4 flex items-center justify-between">
                 <Link to={`/lists/${list.id}`} className="flex-1">
-                  <h3 className="font-semibold text-gray-900 dark:text-white hover:text-indigo-600 dark:hover:text-indigo-400 transition">
+                  <h3 className="font-semibold text-[var(--on-surface)] hover:text-indigo-600 dark:hover:text-indigo-400 transition">
                     {list.title}
                   </h3>
                   {list.description && (

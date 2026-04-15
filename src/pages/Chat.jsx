@@ -91,7 +91,7 @@ export default function Chat() {
   if (!user) {
     return (
       <div className="w-full px-4 py-12 text-center">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+        <h2 className="text-xl font-semibold text-[var(--on-surface)] mb-2">
           Sign in to chat
         </h2>
         <p className="text-gray-500 dark:text-gray-400">
@@ -136,7 +136,7 @@ export default function Chat() {
                   <div className={`inline-block px-3 py-2 rounded-2xl ${
                     msg.user_id === user.id 
                       ? 'gradient-bg text-white' 
-                      : 'glass text-gray-900 dark:text-white'
+                      : 'glass text-[var(--on-surface)]'
                   }`}>
                     {msg.body}
                   </div>
@@ -154,7 +154,7 @@ export default function Chat() {
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type a message..."
             disabled={sending}
-            className="flex-1 px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-[#B85C38] outline-none"
+            className="flex-1 px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-[var(--on-surface)] focus:ring-2 focus:ring-[#B85C38] outline-none"
           />
           <button
             type="submit"
