@@ -196,7 +196,7 @@ export default function SearchResults() {
       {showFilters && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
           <div>
-            <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Category</label>
+            <label className="block text-xs font-medium text-[var(--on-surface-variant)] mb-1">Category</label>
             <select
               value={subject}
               onChange={(e) => handleFilterChange('subject', e.target.value)}
@@ -209,7 +209,7 @@ export default function SearchResults() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Author</label>
+            <label className="block text-xs font-medium text-[var(--on-surface-variant)] mb-1">Author</label>
             <input
               type="text"
               value={author}
@@ -234,7 +234,7 @@ export default function SearchResults() {
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Sort By</label>
+            <label className="block text-xs font-medium text-[var(--on-surface-variant)] mb-1">Sort By</label>
             <select
               value={orderBy}
               onChange={(e) => handleFilterChange('orderBy', e.target.value)}
@@ -256,12 +256,12 @@ export default function SearchResults() {
               {subject && !query && `Books in ${CATEGORIES.find(c => c.query === subject)?.name || subject}`}
               {author && !query && !subject && `Books by ${author}`}
               {hasFilters && (
-                <span className="text-sm text-gray-500 dark:text-gray-400 font-normal ml-2">
+                <span className="text-sm text-[var(--on-surface-variant)] font-normal ml-2">
                   (filtered)
                 </span>
               )}
               {!loading && results.total > 0 && (
-                <span className="text-gray-500 dark:text-gray-400 font-normal text-base ml-2">
+                <span className="text-[var(--on-surface-variant)] font-normal text-base ml-2">
                   ({results.total.toLocaleString()} books found)
                 </span>
               )}
@@ -324,7 +324,7 @@ export default function SearchResults() {
           <svg className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <p className="text-gray-500 dark:text-gray-400 text-lg">No books found</p>
+          <p className="text-[var(--on-surface-variant)] text-lg">No books found</p>
           <p className="text-gray-400 dark:text-gray-500 text-sm mt-1">Try a different search or adjust your filters</p>
         </div>
       )}
@@ -335,7 +335,7 @@ export default function SearchResults() {
           <svg className="w-16 h-16 text-gray-300 dark:text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
-          <p className="text-gray-500 dark:text-gray-400 text-lg">Search for books</p>
+          <p className="text-[var(--on-surface-variant)] text-lg">Search for books</p>
           <p className="text-gray-400 dark:text-gray-500 text-sm mt-1">Enter a search term or use filters to find books</p>
         </div>
       )}
